@@ -5,14 +5,32 @@ export const useTopMenuStore = defineStore("topMenu", {
     menu: [
       {
         icon: "HomeIcon",
-        pageName: "top-menu-page-1",
-        title: "Page 1",
+        pageName: "home",
+        title: "Home",
       },
+      "devider",
       {
-        icon: "HomeIcon",
-        pageName: "top-menu-page-2",
-        title: "Page 2",
+        icon: "UserIcon",
+        title: "Hội Viên",
+        subMenu: [
+          {
+            icon: "",
+            pageName: "side-menu-page-2-1",
+            title: "Bitacora Recepción"
+          },
+          {
+            icon: "",
+            pageName: "side-menu-page-2-2",
+            title: "Calendario Reservas"
+          },
+          {
+            icon: "",
+            pageName: "side-menu-page-2-3",
+            title: "Calendario Amenidades"
+          }
+        ]
       },
+      
     ],
   }),
 });

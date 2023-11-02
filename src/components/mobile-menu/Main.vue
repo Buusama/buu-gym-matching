@@ -5,7 +5,7 @@
   }">
     <div class="mobile-menu-bar">
       <a href="" class="flex mr-auto">
-        <img alt="Tinker Tailwind HTML Admin Template" class="w-6" src="@/assets/images/logo.svg" />
+        <img alt="Buusama" class="w-6" src="@/assets/images/logo.svg" />
       </a>
       <a href="javascript:;" class="mobile-menu-toggler">
         <BarChart2Icon class="w-8 h-8 text-white transform -rotate-90" @click="toggleMobileMenu" />

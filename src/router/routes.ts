@@ -1,7 +1,7 @@
 import Login from '@/views/login/Login.vue';
 import Home from '@/views/home/Home.vue';
 import ErrorPage from '@/views/error-page/ErrorPage.vue';
-import SideMenu from "@/layouts/side-menu/Main.vue";
+import SideMenu from '@/layouts/side-menu/Main.vue';
 const routes = [
     {
         name: 'login',
@@ -9,35 +9,38 @@ const routes = [
         component: Login,
     },
     {
+        path: '/members',
+        component: SideMenu,
+        meta: { requiresAuth: true },
+        children: [
+            {
+                path: 'list',
+                name: 'list-members',
+                component: Home,
+            },
+            {
+                path: 'create',
+                name: 'create-member',
+                component: Home,
+            },
+            {
+                path: 'checkin',
+                name: 'checkin-history',
+                component: Home,
+            },
+        ],
+    },
+    {
         name: 'home',
         path: '/',
         component: SideMenu,
+        meta: { requiresAuth: true },
         children: [
             {
-                path: "/haha",
-                name: "side-menu-page-1",
+                path: '/',
+                name: 'dashboard',
                 component: Home,
             },
-            {
-                path: "/chat",
-                name: "side-menu-page-2",
-                component: Home,
-            },
-            {
-                path: "/chat/a",
-                name: "side-menu-page-2-1",
-                component: Home,
-            },
-            {
-                path: "/chat/b",
-                name: "side-menu-page-2-2",
-                component: Home,
-            },
-            {
-                path: "/chat/c",
-                name: "side-menu-page-2-3",
-                component: Home,
-            },          
         ],
     },
     {
@@ -46,7 +49,7 @@ const routes = [
         component: ErrorPage,
     },
     {
-        path: "/:pathMatch(.*)*",
+        path: '/:pathMatch(.*)*',
         component: ErrorPage,
     },
 ];

@@ -15,11 +15,11 @@
           class="-intro-x hidden md:flex"
         >
           <img
-            alt="Tinker Tailwind HTML Admin Template"
+            alt="Buusama"
             class="w-6"
             src="@/assets/images/logo.svg"
           />
-          <span class="text-white text-lg ml-3"> Tinker </span>
+          <span class="text-white text-lg ml-3"> BuuGym </span>
         </router-link>
         <!-- END: Logo -->
         <!-- BEGIN: Breadcrumb -->
@@ -41,7 +41,7 @@
             class="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in"
           >
             <img
-              alt="Tinker Tailwind HTML Admin Template"
+              alt="Buusama"
               v-bind:src="currentUser?.avatar"
             />
           </DropdownToggle>

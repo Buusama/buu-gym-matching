@@ -9,16 +9,16 @@
       <!-- BEGIN: Side Menu -->
       <nav class="side-nav">
         <router-link
-          :to="{ name: 'side-menu-page-1' }"
+          :to="{ name: 'dashboard' }"
           tag="a"
           class="intro-x flex items-center pl-5 pt-4 mt-3"
         >
           <img
-            alt="Tinker Tailwind HTML Admin Template"
+            alt="Buusama"
             class="w-6"
             src="@/assets/images/logo.svg"
           />
-          <span class="hidden xl:block text-white text-lg ml-3"> Tinker </span>
+          <span class="hidden xl:block text-white text-lg ml-3"> BuuGym </span>
         </router-link>
         <div class="side-nav__devider my-6"></div>
         <ul>
@@ -62,10 +62,7 @@
               <!-- BEGIN: Second Child -->
               <transition @enter="enter" @leave="leave">
                 <ul v-if="menu.subMenu && menu.activeDropdown">
-                  <li
-                    v-for="(subMenu, subMenuKey) in menu.subMenu"
-                    :key="subMenuKey"
-                  >
+                  <li v-for="(subMenu, subMenuKey) in menu.subMenu" :key="subMenuKey">
                     <SideMenuTooltip
                       tag="a"
                       :content="subMenu.title"
@@ -98,9 +95,7 @@
                     <transition @enter="enter" @leave="leave">
                       <ul v-if="subMenu.subMenu && subMenu.activeDropdown">
                         <li
-                          v-for="(
-                            lastSubMenu, lastSubMenuKey
-                          ) in subMenu.subMenu"
+                          v-for="(lastSubMenu, lastSubMenuKey) in subMenu.subMenu"
                           :key="lastSubMenuKey"
                         >
                           <SideMenuTooltip
@@ -109,8 +104,7 @@
                             :href="
                               lastSubMenu.subMenu
                                 ? 'javascript:;'
-                                : router.resolve({ name: lastSubMenu.pageName })
-                                    .path
+                                : router.resolve({ name: lastSubMenu.pageName }).path
                             "
                             class="side-menu"
                             :class="{ 'side-menu--active': lastSubMenu.active }"

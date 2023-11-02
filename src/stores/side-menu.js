@@ -5,32 +5,31 @@ export const useSideMenuStore = defineStore("sideMenu", {
     menu: [
       {
         icon: "HomeIcon",
-        pageName: "home",
+        pageName: "dashboard",
         title: "Home",
       },
       "devider",
       {
-        icon: "HomeIcon",
-        title: "Page 2",
+        icon: "UserIcon",
+        title: "Hội Viên",
         subMenu: [
           {
             icon: "",
-            pageName: "side-menu-page-2-1",
-            title: "Bitacora Recepción"
+            pageName: "list-members",
+            title: "Danh sách hội viên"
           },
           {
             icon: "",
-            pageName: "side-menu-page-2-2",
-            title: "Calendario Reservas"
+            pageName: "checkin-history",
+            title: "Lịch sử checkin"
           },
           {
             icon: "",
-            pageName: "side-menu-page-2-3",
-            title: "Calendario Amenidades"
+            pageName: "create-member",
+            title: "Thêm mới hội viên"
           }
         ]
       },
-      
     ],
   }),
 });

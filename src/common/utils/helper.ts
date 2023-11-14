@@ -3,8 +3,19 @@ import duration from "dayjs/plugin/duration";
 
 dayjs.extend(duration);
 
+interface TimeDifference {
+  days: string;
+  hours: string;
+  minutes: string;
+  seconds: string;
+}
+
+interface RGBColor {
+  (opacity?: number): string;
+}
+
 const helpers = {
-  cutText(text, length) {
+  cutText(text: string, length: number): string {
     if (text.split(" ").length > 1) {
       const string = text.substring(0, length);
       const splitText = string.split(" ");
@@ -14,24 +25,28 @@ const helpers = {
       return text;
     }
   },
-  formatDate(date, format) {
+
+  formatDate(date: string, format: string): string {
     return dayjs(date).format(format);
   },
-  capitalizeFirstLetter(string) {
+
+  capitalizeFirstLetter(string: string): string {
     if (string) {
       return string.charAt(0).toUpperCase() + string.slice(1);
     } else {
       return "";
     }
   },
-  onlyNumber(string) {
+
+  onlyNumber(string: string): string {
     if (string) {
       return string.replace(/\D/g, "");
     } else {
       return "";
     }
   },
-  formatCurrency(number) {
+
+  formatCurrency(number: number): string {
     if (number) {
       const formattedNumber = number.toString().replace(/\D/g, "");
       const rest = formattedNumber.length % 3;
@@ -49,10 +64,9 @@ const helpers = {
       return "";
     }
   },
-  timeAgo(time) {
-    const date = new Date(
-      (time || "").replace(/-/g, "/").replace(/[TZ]/g, " ")
-    );
+
+  timeAgo(time: string): string | boolean {
+    const date = new Date((time || "").replace(/-/g, "/").replace(/[TZ]/g, " "));
     const diff = (new Date().getTime() - date.getTime()) / 1000;
     const dayDiff = Math.floor(diff / 86400);
 
@@ -72,7 +86,8 @@ const helpers = {
       (dayDiff < 31 && Math.ceil(dayDiff / 7) + " weeks ago")
     );
   },
-  diffTimeByNow(time) {
+
+  diffTimeByNow(time: string): TimeDifference {
     const startDate = dayjs(dayjs().format("YYYY-MM-DD HH:mm:ss").toString());
     const endDate = dayjs(dayjs(time).format("YYYY-MM-DD HH:mm:ss").toString());
 
@@ -82,50 +97,53 @@ const helpers = {
     const days = Math.round(milliseconds / 86400000);
     const hours = Math.round((milliseconds % 86400000) / 3600000);
     let minutes = Math.round(((milliseconds % 86400000) % 3600000) / 60000);
-    const seconds = Math.round(
-      (((milliseconds % 86400000) % 3600000) % 60000) / 1000
-    );
+    const seconds = Math.round(((milliseconds % 86400000) % 3600000) % 60000 / 1000);
 
     if (seconds < 30 && seconds >= 0) {
       minutes += 1;
     }
 
+    const padZero = (value: number): string => (value < 10 ? "0" + value : value.toString());
+
     return {
-      days: days.toString().length < 2 ? "0" + days : days,
-      hours: hours.toString().length < 2 ? "0" + hours : hours,
-      minutes: minutes.toString().length < 2 ? "0" + minutes : minutes,
-      seconds: seconds.toString().length < 2 ? "0" + seconds : seconds,
+      days: padZero(days),
+      hours: padZero(hours),
+      minutes: padZero(minutes),
+      seconds: padZero(seconds),
     };
   },
-  isset(obj) {
+
+  isset(obj: any): boolean {
     if (obj !== null && obj !== undefined) {
       if (typeof obj === "object" || Array.isArray(obj)) {
-        return Object.keys(obj).length;
+        return Object.keys(obj).length > 0;
       } else {
-        return obj.toString().length;
+        return obj.toString().length > 0;
       }
     }
-
     return false;
   },
-  toRaw(obj) {
+
+  toRaw(obj: any): any {
     return JSON.parse(JSON.stringify(obj));
   },
-  randomNumbers(from, to, length) {
-    const numbers = [0];
+
+  randomNumbers(from: number, to: number, length: number): number[] {
+    const numbers: number[] = [0];
     for (let i = 1; i < length; i++) {
       numbers.push(Math.ceil(Math.random() * (from - to) + to));
     }
-
     return numbers;
   },
-  toRGB(colors) {
-    const tempColors = Object.assign({}, colors);
+
+  toRGB(colors: any): any {
+    const tempColors: any = Object.assign({}, colors);
     const rgbColors = Object.entries(tempColors);
+
     for (const [key, value] of rgbColors) {
       if (typeof value === "string") {
         if (value.replace("#", "").length == 6) {
-          const aRgbHex = value.replace("#", "").match(/.{1,2}/g);
+          const aRgbHex: any = value.replace("#", "").match(/.{1,2}/g);
           tempColors[key] = (opacity = 1) =>
             `rgb(${parseInt(aRgbHex[0], 16)} ${parseInt(
               aRgbHex[1],
@@ -140,7 +158,7 @@ const helpers = {
   },
 };
 
-const install = (app) => {
+const install = (app: any) => {
   app.config.globalProperties.$h = helpers;
 };
 

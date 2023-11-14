@@ -27,7 +27,6 @@ api.interceptors.request.use(
 
 api.interceptors.response.use(
     (response) => {
-        showMessage(response.data.message, true);
         return response;
     },
     (error) => {

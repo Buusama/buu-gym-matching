@@ -7,14 +7,8 @@ import TippyContent from "./tippy-content/Main.vue";
 import TomSelect from "./tom-select/Main.vue";
 import LoadingIcon from "./loading-icon/Main.vue";
 import TinySlider from "./tiny-slider/Main.vue";
-import ClassicEditor from "./ckeditor/ClassicEditor.vue";
-// import BalloonBlockEditor from './ckeditor/BalloonBlockEditor.vue'
-// import BalloonEditor from './ckeditor/BalloonEditor.vue'
-// import DocumentEditor from './ckeditor/DocumentEditor.vue'
-// import InlineEditor from './ckeditor/InlineEditor.vue'
+import ClassicEditor from "./ckeditor/ClassicEditor.vue"
 import Dropzone from "./dropzone/Main.vue";
-// import FullCalendar from "./calendar/Main.vue";
-// import FullCalendarDraggable from "./calendar/Draggable.vue";
 import Notification from "./notification/Main.vue";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "./modal";
 import {
@@ -87,6 +81,7 @@ export default (app) => {
   app.component("Preview", Preview);
   app.component("Source", Source);
   app.component("Highlight", Highlight);
+
 
   for (const [key, icon] of Object.entries(LucideIcons)) {
     app.component(key, icon);

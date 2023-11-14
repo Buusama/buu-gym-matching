@@ -6,14 +6,8 @@ export default {
     users: {
         list: "/users",
     },
-    mail_templates: {
-        list: "/mail_templates",
-        create: "/mail_templates",
+    members: {
+        list: "/members",
+        create: "/members",
     },
-    notifications: {
-        list: "/notifications",
-    },
-    information: {
-        create: "/information",
-    }
 }

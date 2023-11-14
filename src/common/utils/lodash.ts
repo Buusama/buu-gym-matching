@@ -1,6 +1,6 @@
 import _ from 'lodash'
 
-const install = app => {
+const install = (app: any) => {
   app.config.globalProperties.$_ = _
 }
 

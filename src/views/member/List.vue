@@ -1,9 +1,11 @@
 <template>
   <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-    <h2 class="text-lg font-medium mr-auto">Tabulator</h2>
+    <h2 class="text-lg font-medium mr-auto">Danh sách hội viên</h2>
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
-      <button class="btn btn-primary shadow-md mr-2">Add New Product</button>
-      <Dropdown class="ml-auto sm:ml-0">
+      <router-link :to="{ name: 'create-member' }" tag="a" class="btn btn-primary shadow-md mr-2">
+        Thêm mới hội viên
+      </router-link>
+      <!-- <Dropdown class="ml-auto sm:ml-0">
         <DropdownToggle class="btn px-2 box">
           <span class="w-5 h-5 flex items-center justify-center">
             <PlusIcon class="w-4 h-4" />
@@ -17,7 +19,7 @@
             <DropdownItem> <UserPlusIcon class="w-4 h-4 mr-2" /> New Group </DropdownItem>
           </DropdownContent>
         </DropdownMenu>
-      </Dropdown>
+      </Dropdown> -->
     </div>
   </div>
   <!-- BEGIN: HTML Table Data -->
@@ -26,11 +28,8 @@
       <form id="tabulator-html-filter-form" class="xl:flex sm:mr-auto">
         <div class="sm:flex items-center sm:mr-4">
           <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2">Field</label>
-          <select
-            id="tabulator-html-filter-field"
-            v-model="filter.field"
-            class="form-select w-full sm:w-32 2xl:w-full mt-2 sm:mt-0 sm:w-auto"
-          >
+          <select id="tabulator-html-filter-field" v-model="filter.field"
+            class="form-select w-full sm:w-32 2xl:w-full mt-2 sm:mt-0 sm:w-auto">
             <option value="name">Name</option>
             <option value="category">Category</option>
             <option value="remaining_stock">Remaining Stock</option>
@@ -38,11 +37,7 @@
         </div>
         <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
           <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2">Type</label>
-          <select
-            id="tabulator-html-filter-type"
-            v-model="filter.type"
-            class="form-select w-full mt-2 sm:mt-0 sm:w-auto"
-          >
+          <select id="tabulator-html-filter-type" v-model="filter.type" class="form-select w-full mt-2 sm:mt-0 sm:w-auto">
             <option value="like" selected>like</option>
             <option value="=">=</option>
             <option value="<">&lt;</option>
@@ -54,39 +49,21 @@
         </div>
         <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
           <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2">Value</label>
-          <input
-            id="tabulator-html-filter-value"
-            v-model="filter.value"
-            type="text"
-            class="form-control sm:w-40 2xl:w-full mt-2 sm:mt-0"
-            placeholder="Search..."
-          />
+          <input id="tabulator-html-filter-value" v-model="filter.value" type="text"
+            class="form-control sm:w-40 2xl:w-full mt-2 sm:mt-0" placeholder="Search..." />
         </div>
         <div class="mt-2 xl:mt-0">
-          <button
-            id="tabulator-html-filter-go"
-            type="button"
-            class="btn btn-primary w-full sm:w-16"
-            @click="onFilter"
-          >
+          <button id="tabulator-html-filter-go" type="button" class="btn btn-primary w-full sm:w-16" @click="onFilter">
             Go
           </button>
-          <button
-            id="tabulator-html-filter-reset"
-            type="button"
-            class="btn btn-secondary w-full sm:w-16 mt-2 sm:mt-0 sm:ml-1"
-            @click="onResetFilter"
-          >
+          <button id="tabulator-html-filter-reset" type="button"
+            class="btn btn-secondary w-full sm:w-16 mt-2 sm:mt-0 sm:ml-1" @click="onResetFilter">
             Reset
           </button>
         </div>
       </form>
       <div class="flex mt-5 sm:mt-0">
-        <button
-          id="tabulator-print"
-          class="btn btn-outline-secondary w-1/2 sm:w-auto mr-2"
-          @click="onPrint"
-        >
+        <button id="tabulator-print" class="btn btn-outline-secondary w-1/2 sm:w-auto mr-2" @click="onPrint">
           <PrinterIcon class="w-4 h-4 mr-2" /> Print
         </button>
         <Dropdown class="w-1/2 sm:w-auto">
@@ -114,11 +91,7 @@
       </div>
     </div>
     <div class="overflow-x-auto scrollbar-hidden">
-      <div
-        id="tabulator"
-        ref="tableRef"
-        class="mt-5 table-report table-report--tabulator"
-      ></div>
+      <div id="tabulator" ref="tableRef" class="mt-5 table-report table-report--tabulator"></div>
     </div>
   </div>
   <!-- END: HTML Table Data -->
@@ -166,7 +139,6 @@ const RequestFunc = async (url, config, params) => {
     last_page = response.meta.pageCount;
     data = response.data;
   });
-  console.log(data);
   return new Promise((resolve, reject) => {
     resolve({
       last_page,
@@ -213,15 +185,13 @@ const initTabulator = () => {
           return `
           <div class="flex items-center lg:justify-center">
             <div class="intro-x w-10 h-10 image-fit">
-              <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="${
-                imageAssets["/src/assets/images/" + cell.getData().avatar].default
-              }">
+              <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="${cell.getData().avatar
+            }">
             </div>
             <div class="intro-x ml-5">
               <div class="font-medium whitespace-nowrap">${cell.getData().name}</div>
-              <div class="text-slate-500 text-xs whitespace-nowrap">${
-                cell.getData().birth_date
-              }</div>
+              <div class="text-slate-500 text-xs whitespace-nowrap">${cell.getData().birth_date
+            }</div>
             </div>
           </div>`;
         },
@@ -249,9 +219,8 @@ const initTabulator = () => {
         print: false,
         download: false,
         formatter(cell) {
-          return `<div class="flex items-center lg:justify-center ${
-            cell.getData().gender ? "text-success" : "text-danger"
-          }">
+          return `<div class="flex items-center lg:justify-center ${cell.getData().gender ? "text-success" : "text-danger"
+            }">
                 ${cell.getData().gender == "M" ? "Nam" : "Nu"}
               </div>`;
         },
@@ -266,9 +235,8 @@ const initTabulator = () => {
         download: false,
         formatter(cell) {
           return `<div>
-                  <div class="font-medium whitespace-nowrap">${
-                    cell.getData().address
-                  }</div>
+                  <div class="font-medium whitespace-nowrap">${cell.getData().address
+            }</div>
               </div>`;
         },
       },
@@ -281,12 +249,10 @@ const initTabulator = () => {
         print: false,
         download: false,
         formatter(cell) {
-          return `<div class="flex items-center lg:justify-center ${
-            cell.getData().status ? "text-success" : "text-danger"
-          }">
-                <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> ${
-                  cell.getData().status ? "Active" : "Inactive"
-                }
+          return `<div class="flex items-center lg:justify-center ${cell.getData().status ? "text-success" : "text-danger"
+            }">
+                <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> ${cell.getData().status ? "Active" : "Inactive"
+            }
               </div>`;
         },
       },

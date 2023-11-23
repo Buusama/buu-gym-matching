@@ -79,7 +79,6 @@ import { useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth.store";
 import { helpers, email, required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
-import UserService from "../../services/UserService";
 import Cookies from "js-cookie";
 import { LoginRequest } from "@/api/auth/interfaces/login"
 import config from "@/config";

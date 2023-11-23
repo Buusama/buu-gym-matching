@@ -4,6 +4,7 @@ import axios from '@/common/utils/axios';
 import endpoints from '../endpoints';
 import { GetMembersRequest } from './interfaces/list';
 import { CommonResponse } from "../response";
+import { CreateMemberRequest, CreateMemberResponse } from './interfaces/create';
 
 
 export const getMembers = async (request: GetMembersRequest): Promise<any> => {
@@ -14,6 +15,12 @@ export const getMembers = async (request: GetMembersRequest): Promise<any> => {
     params.append('sort_by', request.sort_by);
 
     const response: AxiosResponse<SearchResponse<any>> = await axios.get(endpoints.members.list, { params: params });
+
+    return response.data;
+}
+
+export const createMember = async (formData: FormData): Promise<any> => {
+    const response: AxiosResponse<CommonResponse<CreateMemberResponse>> = await axios.post(endpoints.members.create, formData);
 
     return response.data;
 }

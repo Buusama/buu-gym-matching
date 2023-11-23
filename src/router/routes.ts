@@ -2,6 +2,7 @@ import Login from '@/views/login/Login.vue';
 import Home from '@/views/home/Home.vue';
 import ErrorPage from '@/views/error-page/ErrorPage.vue';
 import Member from '@/views/member/List.vue';
+import MemberCreate from '@/views/member/Create.vue';
 import SideMenu from '@/layouts/side-menu/Main.vue';
 const routes = [
     {
@@ -22,7 +23,7 @@ const routes = [
             {
                 path: 'create',
                 name: 'create-member',
-                component: Home,
+                component: MemberCreate,
             },
             {
                 path: 'checkin',

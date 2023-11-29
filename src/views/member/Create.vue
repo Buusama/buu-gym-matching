@@ -21,8 +21,9 @@
                                     <div class="mt-3">
                                         <label for="create-member-form-2" class="form-label">Giới tính</label>
                                         <select v-model="gender" class="form-select">
-                                            <option value="M">Nam</option>
-                                            <option value="F">Nữ</option>
+                                            <option value="1">Nam</option>
+                                            <option value="2">Nữ</option>
+                                            <option value="3">Khác</option>
                                         </select>
                                     </div>
                                     <div class="mt-3">
@@ -41,6 +42,7 @@
                                                     months: true,
                                                     years: true,
                                                 },
+                                                format: 'YYYY-MM-DD',
                                             }" class="form-control pl-12" />
                                         </div>
                                     </div>
@@ -57,9 +59,10 @@
                                     </div>
                                     <div class="mt-3">
                                         <label for="create-member-form-6" class="form-label">Trạng thái hoạt động</label>
-                                        <div class="form-switch mt-2">
-                                            <input v-model="status" type="checkbox" class="form-check-input" checked />
-                                        </div>
+                                        <select v-model="status" class="form-select">
+                                            <option value="1">Bình thường</option>
+                                            <option value="5">Chưa thanh toán</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-span-12">
@@ -161,7 +164,7 @@ const createMemberFunc = async () => {
     formData.append("address", data.address);
     formData.append("birth_date", data.birth_date);
 
-
+    console.log(data.birth_date);
     const res = await createMember(formData);
     if (res) {
         showMessage("Thêm mới hội viên thành công", true);

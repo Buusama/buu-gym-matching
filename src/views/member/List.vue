@@ -105,6 +105,7 @@ import Tabulator from "tabulator-tables";
 import dom from "@left4code/tw-starter/dist/js/dom";
 import { upperCaseValue } from "@/common/utils/helpers";
 import { getMembers } from "@/api/members";
+import router from "@/router";
 const tableRef = ref();
 const tabulator = ref();
 const filter = reactive({
@@ -127,8 +128,8 @@ const RequestFunc = async (url, config, params) => {
   let data = [];
   const offset = (params.page - 1) * params.size;
   const limit = params.size;
-  const order = params.sorters[0] ? params.sorters[0].field : "id";
-  const sort = params.sorters[0] ? params.sorters[0].dir : "asc";
+  const order = params.sorters[0] ? params.sorters[0].field : "updated_at";
+  const sort = params.sorters[0] ? params.sorters[0].dir : "desc";
 
   await getMembers({
     skip: offset,
@@ -219,9 +220,9 @@ const initTabulator = () => {
         print: false,
         download: false,
         formatter(cell) {
-          return `<div class="flex items-center lg:justify-center ${cell.getData().gender ? "text-success" : "text-danger"
+          return `<div class="flex items-center lg:justify-center ${cell.getData().gender == 1 ? "text-success" : cell.getData().gender == 2 ? "text-danger" : "text-info"
             }">
-                ${cell.getData().gender == "M" ? "Nam" : "Nu"}
+                ${cell.getData().gender == 1 ? "Nam" : cell.getData().gender == 2 ? "Nu" : "Khac"}
               </div>`;
         },
       },
@@ -273,7 +274,13 @@ const initTabulator = () => {
               </div>`);
           dom(a).on("click", function () {
             // On click actions alert cell.getData().id
-            alert(cell.getData().id);
+            // alert(cell.getData().id);
+            router.push({
+              name: "edit-member",
+              params: {
+                id: cell.getData().id,
+              },
+            });
           });
 
           return a[0];

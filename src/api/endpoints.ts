@@ -9,5 +9,7 @@ export default {
     members: {
         list: "/members",
         create: "/members",
+        detail: (id: string) => `/members/${id}`,
+        update: (id: string) => `/members/${id}`,
     },
 }

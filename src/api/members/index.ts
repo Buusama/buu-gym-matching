@@ -24,3 +24,15 @@ export const createMember = async (formData: FormData): Promise<any> => {
 
     return response.data;
 }
+
+export const getDetailMember = async (id: string): Promise<any> => {
+    const response: AxiosResponse<CommonResponse<any>> = await axios.get(endpoints.members.detail(id));
+
+    return response.data;
+}
+
+export const editMember = async (id: string, formData: FormData): Promise<any> => {
+    const response: AxiosResponse<CommonResponse<any>> = await axios.put(endpoints.members.update(id), formData);
+
+    return response.data;
+}

@@ -3,6 +3,7 @@ import Home from '@/views/home/Home.vue';
 import ErrorPage from '@/views/error-page/ErrorPage.vue';
 import Member from '@/views/member/List.vue';
 import MemberCreate from '@/views/member/Create.vue';
+import MemberEdit from '@/views/member/Edit.vue';
 import SideMenu from '@/layouts/side-menu/Main.vue';
 const routes = [
     {
@@ -29,6 +30,10 @@ const routes = [
                 path: 'checkin',
                 name: 'checkin-history',
                 component: Home,
+            },            {
+                path: ':id/edit',
+                name: 'edit-member',
+                component: MemberEdit,
             },
         ],
     },

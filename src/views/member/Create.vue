@@ -150,6 +150,7 @@ const createMemberFunc = async () => {
         gender: gender.value,
         avatar: newImageFile.value,
         phone: phone.value,
+        email: email.value,
         status: status.value,
         address: address.value,
         birth_date: date.value,
@@ -160,6 +161,7 @@ const createMemberFunc = async () => {
     formData.append("gender", data.gender);
     formData.append("avatar", data.avatar);
     formData.append("phone", data.phone);
+    formData.append("email", data.email);
     formData.append("status", data.status.toString());
     formData.append("address", data.address);
     formData.append("birth_date", data.birth_date);

@@ -168,6 +168,7 @@ const updateMemberFunc = async () => {
         gender: gender.value,
         avatar: newImageFile.value,
         phone: phone.value,
+        email: email.value,
         status: status.value,
         address: address.value,
         birth_date: date.value,
@@ -183,6 +184,7 @@ const updateMemberFunc = async () => {
         formData.append("avatar", "");
     }
     formData.append("phone", data.phone);
+    formData.append("email", data.email);
     formData.append("status", data.status.toString());
     formData.append("address", data.address);
     formData.append("birth_date", data.birth_date);

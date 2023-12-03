@@ -14,23 +14,23 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
-import { useDarkModeStore } from "@/stores/dark-mode";
-import dom from "@left4code/tw-starter/dist/js/dom";
+import { computed } from 'vue'
+import { useDarkModeStore } from '@/stores/dark-mode'
+import dom from '@left4code/tw-starter/dist/js/dom'
 
-const darkModeStore = useDarkModeStore();
-const darkMode = computed(() => darkModeStore.darkMode);
+const darkModeStore = useDarkModeStore()
+const darkMode = computed(() => darkModeStore.darkMode)
 
 const setDarkModeClass = () => {
   darkMode.value
-    ? dom("html").addClass("dark")
-    : dom("html").removeClass("dark");
-};
+    ? dom('html').addClass('dark')
+    : dom('html').removeClass('dark')
+}
 
 const switchMode = () => {
-  darkModeStore.setDarkMode(!darkMode.value);
-  setDarkModeClass();
-};
+  darkModeStore.setDarkMode(!darkMode.value)
+  setDarkModeClass()
+}
 
-setDarkModeClass();
+setDarkModeClass()
 </script>

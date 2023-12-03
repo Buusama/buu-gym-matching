@@ -1,35 +1,35 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia'
 
-export const useSideMenuStore = defineStore("sideMenu", {
+export const useSideMenuStore = defineStore('sideMenu', {
   state: () => ({
     menu: [
       {
-        icon: "HomeIcon",
-        pageName: "dashboard",
-        title: "Home",
+        icon: 'HomeIcon',
+        pageName: 'dashboard',
+        title: 'Home',
       },
-      "devider",
+      'devider',
       {
-        icon: "UserIcon",
-        title: "Hội Viên",
+        icon: 'UserIcon',
+        title: 'Hội Viên',
         subMenu: [
           {
-            icon: "",
-            pageName: "list-members",
-            title: "Danh sách hội viên"
+            icon: '',
+            pageName: 'list-members',
+            title: 'Danh sách hội viên'
           },
           {
-            icon: "",
-            pageName: "checkin-history",
-            title: "Lịch sử checkin"
+            icon: '',
+            pageName: 'checkin-history',
+            title: 'Lịch sử checkin'
           },
           {
-            icon: "",
-            pageName: "create-member",
-            title: "Thêm mới hội viên"
+            icon: '',
+            pageName: 'create-member',
+            title: 'Thêm mới hội viên'
           }
         ]
       },
     ],
   }),
-});
+})

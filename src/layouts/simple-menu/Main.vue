@@ -150,38 +150,38 @@
 </template>
 
 <script setup>
-import { computed, onMounted, provide, ref, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useSimpleMenuStore } from "@/stores/simple-menu";
-import { helper as $h } from "@/utils/helper";
-import TopBar from "@/components/top-bar/Main.vue";
-import MobileMenu from "@/components/mobile-menu/Main.vue";
-import DarkModeSwitcher from "@/components/dark-mode-switcher/Main.vue";
-import MainColorSwitcher from "@/components/main-color-switcher/Main.vue";
-import { linkTo, nestedMenu, enter, leave } from "@/layouts/side-menu";
-import dom from "@left4code/tw-starter/dist/js/dom";
+import { computed, onMounted, provide, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useSimpleMenuStore } from '@/stores/simple-menu'
+import { helper as $h } from '@/utils/helper'
+import TopBar from '@/components/top-bar/Main.vue'
+import MobileMenu from '@/components/mobile-menu/Main.vue'
+import DarkModeSwitcher from '@/components/dark-mode-switcher/Main.vue'
+import MainColorSwitcher from '@/components/main-color-switcher/Main.vue'
+import { linkTo, nestedMenu, enter, leave } from '@/layouts/side-menu'
+import dom from '@left4code/tw-starter/dist/js/dom'
 
-const route = useRoute();
-const router = useRouter();
-const formattedMenu = ref([]);
-const simpleMenuStore = useSimpleMenuStore();
-const simpleMenu = computed(() => nestedMenu(simpleMenuStore.menu, route));
+const route = useRoute()
+const router = useRouter()
+const formattedMenu = ref([])
+const simpleMenuStore = useSimpleMenuStore()
+const simpleMenu = computed(() => nestedMenu(simpleMenuStore.menu, route))
 
-provide("forceActiveMenu", (pageName) => {
-  route.forceActiveMenu = pageName;
-  formattedMenu.value = $h.toRaw(simpleMenu.value);
-});
+provide('forceActiveMenu', (pageName) => {
+  route.forceActiveMenu = pageName
+  formattedMenu.value = $h.toRaw(simpleMenu.value)
+})
 
 watch(
   computed(() => route.path),
   () => {
-    delete route.forceActiveMenu;
-    formattedMenu.value = $h.toRaw(simpleMenu.value);
+    delete route.forceActiveMenu
+    formattedMenu.value = $h.toRaw(simpleMenu.value)
   }
-);
+)
 
 onMounted(() => {
-  dom("body").removeClass("error-page").removeClass("login").addClass("main");
-  formattedMenu.value = $h.toRaw(simpleMenu.value);
-});
+  dom('body').removeClass('error-page').removeClass('login').addClass('main')
+  formattedMenu.value = $h.toRaw(simpleMenu.value)
+})
 </script>

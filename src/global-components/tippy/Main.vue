@@ -5,8 +5,8 @@
 </template>
 
 <script setup>
-import { ref, inject, onMounted } from "vue";
-import tippy, { roundArrow, animateFill } from "tippy.js";
+import { ref, inject, onMounted } from 'vue'
+import tippy, { roundArrow, animateFill } from 'tippy.js'
 
 const props = defineProps({
   content: {
@@ -15,7 +15,7 @@ const props = defineProps({
   },
   tag: {
     type: String,
-    default: "span",
+    default: 'span',
   },
   options: {
     type: Object,
@@ -25,9 +25,9 @@ const props = defineProps({
     type: String,
     default: null,
   },
-});
+})
 
-const tippyRef = ref();
+const tippyRef = ref()
 const init = () => {
   tippy(tippyRef.value, {
     plugins: [animateFill],
@@ -36,30 +36,30 @@ const init = () => {
     popperOptions: {
       modifiers: [
         {
-          name: "preventOverflow",
+          name: 'preventOverflow',
           options: {
-            rootBoundary: "viewport",
+            rootBoundary: 'viewport',
           },
         },
       ],
     },
     animateFill: false,
-    animation: "shift-away",
+    animation: 'shift-away',
     ...props.options,
-  });
-};
+  })
+}
 
 const bindInstance = () => {
   if (props.refKey) {
-    const bind = inject(`bind[${props.refKey}]`);
+    const bind = inject(`bind[${props.refKey}]`)
     if (bind) {
-      bind(tippyRef.value);
+      bind(tippyRef.value)
     }
   }
-};
+}
 
 onMounted(() => {
-  init();
-  bindInstance();
-});
+  init()
+  bindInstance()
+})
 </script>

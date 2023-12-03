@@ -5,17 +5,17 @@
 </template>
 
 <script setup>
-import { inject, onMounted, ref } from "vue";
-import { init, reInit } from "./index";
+import { inject, onMounted, ref } from 'vue'
+import { init, reInit } from './index'
 
 const vSliderDirective = {
   mounted(el, { value }) {
-    init(el, value.props);
+    init(el, value.props)
   },
   updated(el) {
-    reInit(el);
+    reInit(el)
   },
-};
+}
 
 const props = defineProps({
   options: {
@@ -26,21 +26,21 @@ const props = defineProps({
     type: String,
     default: null,
   },
-});
+})
 
-const emit = defineEmits();
+const emit = defineEmits()
 
-const sliderRef = ref();
+const sliderRef = ref()
 const bindInstance = () => {
   if (props.refKey) {
-    const bind = inject(`bind[${props.refKey}]`);
+    const bind = inject(`bind[${props.refKey}]`)
     if (bind) {
-      bind(sliderRef.value);
+      bind(sliderRef.value)
     }
   }
-};
+}
 
 onMounted(() => {
-  bindInstance();
-});
+  bindInstance()
+})
 </script>

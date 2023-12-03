@@ -800,22 +800,22 @@
 </template>
 
 <script setup>
-import { useDarkModeStore } from "@/stores/dark-mode";
-import { computed } from "vue";
+import { useDarkModeStore } from '@/stores/dark-mode'
+import { computed } from 'vue'
 
 const props = defineProps({
   icon: {
     type: String,
-    default: "",
+    default: '',
   },
   color: {
     type: String,
-    default: "#2d3748",
+    default: '#2d3748',
   },
-});
+})
 
-const darkModeStore = useDarkModeStore();
+const darkModeStore = useDarkModeStore()
 const iconColor = computed(() =>
-  !darkModeStore.darkMode ? props.color : "#ffffff"
-);
+  !darkModeStore.darkMode ? props.color : '#ffffff'
+)
 </script>

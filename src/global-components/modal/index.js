@@ -6,42 +6,53 @@ import {
   defineComponent,
   resolveDirective,
   withDirectives,
-} from "vue";
-import dom from "@left4code/tw-starter/dist/js/dom";
-import "@left4code/tw-starter/dist/js/modal";
+} from 'vue'
+import dom from '@left4code/tw-starter/dist/js/dom'
+import '@left4code/tw-starter/dist/js/modal'
 
 const init = (el, { props, emit }) => {
-  const modal = tailwind.Modal.getOrCreateInstance(el);
+  const modal = tailwind.Modal.getOrCreateInstance(el)
   if (props.show) {
-    modal.show();
+    modal.show()
   } else {
-    modal.hide();
+    modal.hide()
   }
 
-  if (el["__initiated"] === undefined) {
-    el["__initiated"] = true;
+  if (el['__initiated'] === undefined) {
+    el['__initiated'] = true
 
-    el.addEventListener("show.tw.modal", () => {
-      emit("show");
-    });
+    el.addEventListener('show.tw.modal', () => {
+      emit('show')
+    })
 
-    el.addEventListener("shown.tw.modal", () => {
-      emit("shown");
-    });
+    el.addEventListener('shown.tw.modal', () => {
+      emit('shown')
+    })
 
-    el.addEventListener("hide.tw.modal", () => {
-      emit("hide");
-    });
+    el.addEventListener('hide.tw.modal', () => {
+      emit('hide')
+    })
 
-    el.addEventListener("hidden.tw.modal", () => {
-      emit("hidden");
-    });
+    el.addEventListener('hidden.tw.modal', () => {
+      emit('hidden')
+    })
   }
-};
+}
 
 // Modal wrapper
 const Modal = defineComponent({
-  name: "Modal",
+  name: 'Modal',
+  directives: {
+    modal: {
+      mounted(el, { value }) {
+        dom(el).attr('id', '_' + Math.random().toString(36).substr(2, 9))
+        init(el, value)
+      },
+      updated(el, { value }) {
+        init(el, value)
+      },
+    },
+  },
   props: {
     show: {
       type: Boolean,
@@ -49,11 +60,11 @@ const Modal = defineComponent({
     },
     size: {
       type: String,
-      default: "",
+      default: '',
     },
     backdrop: {
       type: String,
-      default: "",
+      default: '',
     },
     slideOver: {
       type: Boolean,
@@ -64,60 +75,49 @@ const Modal = defineComponent({
       default: null,
     },
   },
-  directives: {
-    modal: {
-      mounted(el, { value }) {
-        dom(el).attr("id", "_" + Math.random().toString(36).substr(2, 9));
-        init(el, value);
-      },
-      updated(el, { value }) {
-        init(el, value);
-      },
-    },
-  },
   setup(props, { slots, attrs, emit }) {
-    const modalRef = ref();
+    const modalRef = ref()
     const bindInstance = () => {
       if (props.refKey) {
-        const bind = inject(`bind[${props.refKey}]`);
+        const bind = inject(`bind[${props.refKey}]`)
         if (bind) {
-          bind(tailwind.Modal.getOrCreateInstance(modalRef.value));
+          bind(tailwind.Modal.getOrCreateInstance(modalRef.value))
         }
       }
-    };
+    }
 
     onMounted(() => {
-      bindInstance();
-    });
+      bindInstance()
+    })
 
-    const modalDirective = resolveDirective("modal");
+    const modalDirective = resolveDirective('modal')
 
     return () =>
       withDirectives(
         h(
-          "div",
+          'div',
           {
-            class: ["modal", { "modal-slide-over": props.slideOver }],
-            tabindex: "-1",
-            "aria-hidden": "true",
-            "data-tw-backdrop": props.backdrop,
+            class: ['modal', { 'modal-slide-over': props.slideOver }],
+            tabindex: '-1',
+            'aria-hidden': 'true',
+            'data-tw-backdrop': props.backdrop,
             ref: modalRef,
           },
           [
             h(
-              "div",
+              'div',
               {
-                class: ["modal-dialog", props.size],
+                class: ['modal-dialog', props.size],
               },
               [
                 h(
-                  "div",
+                  'div',
                   {
-                    class: "modal-content",
+                    class: 'modal-content',
                   },
                   slots.default({
                     dismiss: () => {
-                      tailwind.Modal.getOrCreateInstance(modalRef.value).hide();
+                      tailwind.Modal.getOrCreateInstance(modalRef.value).hide()
                     },
                   })
                 ),
@@ -126,53 +126,53 @@ const Modal = defineComponent({
           ]
         ),
         [[modalDirective, { props, emit }]]
-      );
+      )
   },
-});
+})
 
 // Modal header
 const ModalHeader = defineComponent({
-  name: "ModalHeader",
+  name: 'ModalHeader',
   setup(props, { slots, attrs, emit }) {
     return () =>
       h(
-        "div",
+        'div',
         {
-          class: "modal-header",
+          class: 'modal-header',
         },
         slots.default()
-      );
+      )
   },
-});
+})
 
 // Modal body
 const ModalBody = defineComponent({
-  name: "ModalBody",
+  name: 'ModalBody',
   setup(props, { slots, attrs, emit }) {
     return () =>
       h(
-        "div",
+        'div',
         {
-          class: "modal-body",
+          class: 'modal-body',
         },
         slots.default()
-      );
+      )
   },
-});
+})
 
 // Modal footer
 const ModalFooter = defineComponent({
-  name: "ModalFooter",
+  name: 'ModalFooter',
   setup(props, { slots, attrs, emit }) {
     return () =>
       h(
-        "div",
+        'div',
         {
-          class: "modal-footer",
+          class: 'modal-footer',
         },
         slots.default()
-      );
+      )
   },
-});
+})
 
-export { Modal, ModalHeader, ModalBody, ModalFooter };
+export { Modal, ModalHeader, ModalBody, ModalFooter }

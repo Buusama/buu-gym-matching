@@ -11,14 +11,14 @@
 </template>
 
 <script setup>
-import { inject, ref, onMounted } from "vue";
-import { init } from "./index";
+import { inject, ref, onMounted } from 'vue'
+import { init } from './index'
 
 const vFileUploadDirective = {
   mounted(el, { value }) {
-    init(el, value.props);
+    init(el, value.props)
   },
-};
+}
 
 const props = defineProps({
   options: {
@@ -29,21 +29,21 @@ const props = defineProps({
     type: String,
     default: null,
   },
-});
+})
 
-const emit = defineEmits();
+const emit = defineEmits()
 
-const fileUploadRef = ref();
+const fileUploadRef = ref()
 const bindInstance = () => {
   if (props.refKey) {
-    const bind = inject(`bind[${props.refKey}]`);
+    const bind = inject(`bind[${props.refKey}]`)
     if (bind) {
-      bind(fileUploadRef.value);
+      bind(fileUploadRef.value)
     }
   }
-};
+}
 
 onMounted(() => {
-  bindInstance();
-});
+  bindInstance()
+})
 </script>

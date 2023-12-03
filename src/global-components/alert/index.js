@@ -1,76 +1,76 @@
-import { h, ref, defineComponent, resolveDirective, withDirectives } from "vue";
-import "@left4code/tw-starter/dist/js/alert";
+import { h, ref, defineComponent, resolveDirective, withDirectives } from 'vue'
+import '@left4code/tw-starter/dist/js/alert'
 
 const init = (el, { props, emit }) => {
-  const alert = tailwind.Alert.getOrCreateInstance(el);
+  const alert = tailwind.Alert.getOrCreateInstance(el)
   if (props.show) {
-    alert.show();
+    alert.show()
   } else {
-    alert.hide();
+    alert.hide()
   }
 
-  if (el["__initiated"] === undefined) {
-    el["__initiated"] = true;
+  if (el['__initiated'] === undefined) {
+    el['__initiated'] = true
 
-    el.addEventListener("show.tw.alert", () => {
-      emit("show");
-    });
+    el.addEventListener('show.tw.alert', () => {
+      emit('show')
+    })
 
-    el.addEventListener("shown.tw.alert", () => {
-      emit("shown");
-    });
+    el.addEventListener('shown.tw.alert', () => {
+      emit('shown')
+    })
 
-    el.addEventListener("hide.tw.alert", () => {
-      emit("hide");
-    });
+    el.addEventListener('hide.tw.alert', () => {
+      emit('hide')
+    })
 
-    el.addEventListener("hidden.tw.alert", () => {
-      emit("hidden");
-    });
+    el.addEventListener('hidden.tw.alert', () => {
+      emit('hidden')
+    })
   }
-};
+}
 
 // Alert wrapper
 const Alert = defineComponent({
-  name: "Alert",
+  name: 'Alert',
+  directives: {
+    alert: {
+      mounted(el, { value }) {
+        init(el, value)
+      },
+      updated(el, { value }) {
+        init(el, value)
+      },
+    },
+  },
   props: {
     show: {
       type: Boolean,
       default: true,
     },
   },
-  directives: {
-    alert: {
-      mounted(el, { value }) {
-        init(el, value);
-      },
-      updated(el, { value }) {
-        init(el, value);
-      },
-    },
-  },
   setup(props, { slots, attrs, emit }) {
-    const alertRef = ref();
-    const alertDirective = resolveDirective("alert");
+    const alertRef = ref()
+    const alertDirective = resolveDirective('alert')
 
     return () =>
       withDirectives(
         h(
-          "div",
+          'div',
           {
-            class: "alert",
-            role: "alert",
+            class: 'alert',
+            role: 'alert',
             ref: alertRef,
           },
           slots.default({
             dismiss: () => {
-              tailwind.Alert.getOrCreateInstance(alertRef.value).hide();
+              tailwind.Alert.getOrCreateInstance(alertRef.value).hide()
             },
           })
         ),
         [[alertDirective, { props, emit }]]
-      );
+      )
   },
-});
+})
 
-export { Alert };
+export { Alert }

@@ -1,21 +1,21 @@
-import { createApp } from "vue";
-import { createPinia } from "pinia";
-import App from "./App.vue"
-import piniaPersist from "pinia-plugin-persist";
-import router from "./router";
-import globalComponents from "./global-components";
-import utils from "./common/utils";
-import "./assets/css/app.css";
+import { createApp } from 'vue'
+import { createPinia } from 'pinia'
+import App from './App.vue'
+import piniaPersist from 'pinia-plugin-persist'
+import router from './router'
+import globalComponents from './global-components'
+import utils from './common/utils'
+import './assets/css/app.css'
 
-const app = createApp(App);
+const app = createApp(App)
 
-const pinia = createPinia();
-pinia.use(piniaPersist);
+const pinia = createPinia()
+pinia.use(piniaPersist)
 
-app.use(router);
-app.use(pinia);
+app.use(router)
+app.use(pinia)
 
-globalComponents(app);
-utils(app);
+globalComponents(app)
+utils(app)
 
-app.mount("#app");
+app.mount('#app')

@@ -98,38 +98,38 @@
 </template>
 
 <script setup>
-import { ref, reactive, onMounted } from "vue";
-import xlsx from "xlsx";
-import { createIcons, icons } from "lucide";
-import Tabulator from "tabulator-tables";
-import dom from "@left4code/tw-starter/dist/js/dom";
-import { upperCaseValue } from "@/common/utils/helpers";
-import { getMembers } from "@/api/members";
-import router from "@/router";
-const tableRef = ref();
-const tabulator = ref();
+import { ref, reactive, onMounted } from 'vue'
+import xlsx from 'xlsx'
+import { createIcons, icons } from 'lucide'
+import Tabulator from 'tabulator-tables'
+import dom from '@left4code/tw-starter/dist/js/dom'
+import { upperCaseValue } from '@/common/utils/helpers'
+import { getMembers } from '@/api/members'
+import router from '@/router'
+const tableRef = ref()
+const tabulator = ref()
 const filter = reactive({
-  field: "name",
-  type: "like",
-  value: "",
-});
+  field: 'name',
+  type: 'like',
+  value: '',
+})
 const tableData = reactive({
   totalRecordCount: 0,
   sortable: {
-    order: "asc",
-    sort: "name",
+    order: 'asc',
+    sort: 'name',
   },
   rows: [],
-});
-const imageAssets = import.meta.globEager(`/src/assets/images/*.{jpg,jpeg,png,svg}`);
+})
+const imageAssets = import.meta.globEager(`/src/assets/images/*.{jpg,jpeg,png,svg}`)
 
 const RequestFunc = async (url, config, params) => {
-  let last_page = 0;
-  let data = [];
-  const offset = (params.page - 1) * params.size;
-  const limit = params.size;
-  const order = params.sorters[0] ? params.sorters[0].field : "updated_at";
-  const sort = params.sorters[0] ? params.sorters[0].dir : "desc";
+  let last_page = 0
+  let data = []
+  const offset = (params.page - 1) * params.size
+  const limit = params.size
+  const order = params.sorters[0] ? params.sorters[0].field : 'updated_at'
+  const sort = params.sorters[0] ? params.sorters[0].dir : 'desc'
 
   await getMembers({
     skip: offset,
@@ -137,49 +137,49 @@ const RequestFunc = async (url, config, params) => {
     sort_by: order,
     sort_enum: upperCaseValue(sort),
   }).then((response) => {
-    last_page = response.meta.pageCount;
-    data = response.data;
-  });
+    last_page = response.meta.pageCount
+    data = response.data
+  })
   return new Promise((resolve, reject) => {
     resolve({
       last_page,
       data,
-    });
-    reject(new Error("Error"));
-  });
-};
+    })
+    reject(new Error('Error'))
+  })
+}
 
 const initTabulator = () => {
   tabulator.value = new Tabulator(tableRef.value, {
-    ajaxURL: "linhlinhsoma",
+    ajaxURL: 'linhlinhsoma',
     ajaxFiltering: true,
     ajaxSorting: true,
     ajaxRequestFunc: RequestFunc,
     printAsHtml: true,
     printStyled: true,
-    pagination: "remote",
+    pagination: 'remote',
     paginationSize: 10,
     paginationSizeSelector: [10, 20, 30, 40],
-    layout: "fitColumns",
-    responsiveLayout: "collapse",
-    placeholder: "No matching records found",
+    layout: 'fitColumns',
+    responsiveLayout: 'collapse',
+    placeholder: 'No matching records found',
     columns: [
       {
-        formatter: "responsiveCollapse",
+        formatter: 'responsiveCollapse',
         width: 40,
         minWidth: 30,
-        hozAlign: "center",
+        hozAlign: 'center',
         resizable: false,
         headerSort: false,
       },
 
       // For HTML table
       {
-        title: "TÊN HỘI VIÊN",
+        title: 'TÊN HỘI VIÊN',
         minWidth: 180,
         responsive: 0,
-        field: "name",
-        vertAlign: "middle",
+        field: 'name',
+        vertAlign: 'middle',
         print: false,
         download: false,
         formatter(cell) {
@@ -194,76 +194,76 @@ const initTabulator = () => {
               <div class="text-slate-500 text-xs whitespace-nowrap">${cell.getData().birth_date
             }</div>
             </div>
-          </div>`;
+          </div>`
         },
       },
       {
-        title: "SỐ ĐIỆN THOẠI",
+        title: 'SỐ ĐIỆN THOẠI',
         minWidth: 180,
-        field: "phone",
-        hozAlign: "center",
-        vertAlign: "middle",
+        field: 'phone',
+        hozAlign: 'center',
+        vertAlign: 'middle',
         print: false,
         download: false,
         formatter(cell) {
           return `<div>
                   <div class="font-medium whitespace-nowrap">${cell.getData().phone}</div>
-              </div>`;
+              </div>`
         },
       },
       {
-        title: "GIỚI TÍNH",
-        field: "gender",
+        title: 'GIỚI TÍNH',
+        field: 'gender',
         minWidth: 100,
-        hozAlign: "center",
-        vertAlign: "middle",
+        hozAlign: 'center',
+        vertAlign: 'middle',
         print: false,
         download: false,
         formatter(cell) {
-          return `<div class="flex items-center lg:justify-center ${cell.getData().gender == 1 ? "text-success" : cell.getData().gender == 2 ? "text-danger" : "text-info"
+          return `<div class="flex items-center lg:justify-center ${cell.getData().gender == 1 ? 'text-success' : cell.getData().gender == 2 ? 'text-danger' : 'text-info'
             }">
-                ${cell.getData().gender == 1 ? "Nam" : cell.getData().gender == 2 ? "Nu" : "Khac"}
-              </div>`;
+                ${cell.getData().gender == 1 ? 'Nam' : cell.getData().gender == 2 ? 'Nu' : 'Khac'}
+              </div>`
         },
       },
       {
-        title: "ĐỊA CHỈ",
+        title: 'ĐỊA CHỈ',
         minWidth: 150,
-        field: "address",
-        hozAlign: "center",
-        vertAlign: "middle",
+        field: 'address',
+        hozAlign: 'center',
+        vertAlign: 'middle',
         print: false,
         download: false,
         formatter(cell) {
           return `<div>
                   <div class="font-medium whitespace-nowrap">${cell.getData().address
             }</div>
-              </div>`;
+              </div>`
         },
       },
       {
-        title: "STATUS",
+        title: 'STATUS',
         minWidth: 200,
-        field: "status",
-        hozAlign: "center",
-        vertAlign: "middle",
+        field: 'status',
+        hozAlign: 'center',
+        vertAlign: 'middle',
         print: false,
         download: false,
         formatter(cell) {
-          return `<div class="flex items-center lg:justify-center ${cell.getData().status ? "text-success" : "text-danger"
+          return `<div class="flex items-center lg:justify-center ${cell.getData().status ? 'text-success' : 'text-danger'
             }">
-                <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> ${cell.getData().status ? "Active" : "Inactive"
+                <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> ${cell.getData().status ? 'Active' : 'Inactive'
             }
-              </div>`;
+              </div>`
         },
       },
       {
-        title: "ACTIONS",
+        title: 'ACTIONS',
         minWidth: 100,
-        field: "actions",
+        field: 'actions',
         responsive: 1,
-        hozAlign: "center",
-        vertAlign: "middle",
+        hozAlign: 'center',
+        vertAlign: 'middle',
         print: false,
         download: false,
         formatter(cell) {
@@ -271,120 +271,120 @@ const initTabulator = () => {
                 <a class="flex items-center mr-3" href="javascript:;">
                   <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit
                 </a>
-              </div>`);
-          dom(a).on("click", function () {
+              </div>`)
+          dom(a).on('click', function () {
             // On click actions alert cell.getData().id
             // alert(cell.getData().id);
             router.push({
-              name: "edit-member",
+              name: 'edit-member',
               params: {
                 id: cell.getData().id,
               },
-            });
-          });
+            })
+          })
 
-          return a[0];
+          return a[0]
         },
       },
 
       // For print format
       {
-        title: "TÊN HỘI VIÊN",
-        field: "name",
+        title: 'TÊN HỘI VIÊN',
+        field: 'name',
         visible: false,
         print: true,
         download: true,
       },
       {
-        title: "SỐ ĐIỆN THOẠI",
-        field: "phone",
+        title: 'SỐ ĐIỆN THOẠI',
+        field: 'phone',
         visible: false,
         print: true,
         download: true,
       },
       {
-        title: "ĐỊA CHỈ",
-        field: "address",
+        title: 'ĐỊA CHỈ',
+        field: 'address',
         visible: false,
         print: true,
         download: true,
       },
       {
-        title: "STATUS",
-        field: "status",
+        title: 'STATUS',
+        field: 'status',
         visible: false,
         print: true,
         download: true,
         formatterPrint(cell) {
-          return cell.getValue() ? "Active" : "Inactive";
+          return cell.getValue() ? 'Active' : 'Inactive'
         },
       },
     ],
     renderComplete() {
       createIcons({
         icons,
-        "stroke-width": 1.5,
-        nameAttr: "data-lucide",
-      });
+        'stroke-width': 1.5,
+        nameAttr: 'data-lucide',
+      })
     },
-  });
-};
+  })
+}
 
 // Redraw table onresize
 const reInitOnResizeWindow = () => {
-  window.addEventListener("resize", () => {
-    tabulator.value.redraw();
+  window.addEventListener('resize', () => {
+    tabulator.value.redraw()
     createIcons({
       icons,
-      "stroke-width": 1.5,
-      nameAttr: "data-lucide",
-    });
-  });
-};
+      'stroke-width': 1.5,
+      nameAttr: 'data-lucide',
+    })
+  })
+}
 
 // Filter function
 const onFilter = () => {
-  tabulator.value.setFilter(filter.field, filter.type, filter.value);
-};
+  tabulator.value.setFilter(filter.field, filter.type, filter.value)
+}
 
 // On reset filter
 const onResetFilter = () => {
-  filter.field = "name";
-  filter.type = "like";
-  filter.value = "";
-  onFilter();
-};
+  filter.field = 'name'
+  filter.type = 'like'
+  filter.value = ''
+  onFilter()
+}
 
 // Export
 const onExportCsv = () => {
-  tabulator.value.download("csv", "data.csv");
-};
+  tabulator.value.download('csv', 'data.csv')
+}
 
 const onExportJson = () => {
-  tabulator.value.download("json", "data.json");
-};
+  tabulator.value.download('json', 'data.json')
+}
 
 const onExportXlsx = () => {
-  const win = window;
-  win.XLSX = xlsx;
-  tabulator.value.download("xlsx", "data.xlsx", {
-    sheetName: "Products",
-  });
-};
+  const win = window
+  win.XLSX = xlsx
+  tabulator.value.download('xlsx', 'data.xlsx', {
+    sheetName: 'Products',
+  })
+}
 
 const onExportHtml = () => {
-  tabulator.value.download("html", "data.html", {
+  tabulator.value.download('html', 'data.html', {
     style: true,
-  });
-};
+  })
+}
 
 // Print
 const onPrint = () => {
-  tabulator.value.print();
-};
+  tabulator.value.print()
+}
 
 onMounted(() => {
-  initTabulator();
-  reInitOnResizeWindow();
-});
+  initTabulator()
+  reInitOnResizeWindow()
+})
 </script>

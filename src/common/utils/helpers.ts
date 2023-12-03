@@ -1,90 +1,90 @@
-import { createToast } from "mosha-vue-toastify";
-import "mosha-vue-toastify/dist/style.css";
+import { createToast } from 'mosha-vue-toastify'
+import 'mosha-vue-toastify/dist/style.css'
 export const showMessage = (message: string, success: boolean): void => {
-    let messageTxt = "";
+    let messageTxt = ''
 
     if (Array.isArray(message)) {
         message.forEach(function (item) {
-            let input = Object.values(item);
+            let input = Object.values(item)
 
             input.forEach(function (i) {
-                messageTxt += Object.values(i).join("<br>");
-            });
+                messageTxt += Object.values(i).join('<br>')
+            })
 
-            messageTxt += "<br>";
-        });
+            messageTxt += '<br>'
+        })
     } else {
-        messageTxt = message;
+        messageTxt = message
     }
     if (!success) {
         createToast(
             {
-                title: "Error",
+                title: 'Error',
                 description: messageTxt,
             },
             {
                 showIcon: true,
-                type: "danger",
+                type: 'danger',
                 timeout: 1000,
-                transition: "slide",
+                transition: 'slide',
             }
-        );
+        )
     } else {
         createToast(
             {
-                title: "Success",
+                title: 'Success',
                 description: messageTxt,
             },
             {
                 showIcon: true,
-                type: "success",
+                type: 'success',
                 timeout: 1000,
-                transition: "slide",
+                transition: 'slide',
             }
-        );
+        )
     }
 }
 
 export const upperCaseValue = (value: string) => {
-    return value.toUpperCase();
+    return value.toUpperCase()
 }
 
 export function getMinuteEvery(step: number) {
-    const minutes = [];
-    let label: string = '';
+    const minutes = []
+    let label: string = ''
 
     for (let i = 0; i < 60; i += step) {
         if (i < 10) {
-            label = '0' + i;
+            label = '0' + i
         } else {
-            label = '' + i;
+            label = '' + i
         }
         minutes.push({ label: label, id: label })
     }
 
-    return minutes;
+    return minutes
 }
 
 export function getHour() {
-    const hours = [];
-    let label: string = '';
+    const hours = []
+    let label: string = ''
 
     for (let i = 0; i < 24; i++) {
         if (i < 10) {
-            label = '0' + i;
+            label = '0' + i
         } else {
-            label = '' + i;
+            label = '' + i
         }
         hours.push({ label: label, id: label })
     }
 
-    return hours;
+    return hours
 }
 
 export function toNearestEveryMinutes(value: number, every: number) {
-    return Math.floor(value / every) * every;
+    return Math.floor(value / every) * every
 }
 
 export function numberLabel(value: number) {
-    return value < 10 ? "0" + value : value.toString();
+    return value < 10 ? '0' + value : value.toString()
 }

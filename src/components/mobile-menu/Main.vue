@@ -83,41 +83,41 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { helper as $h } from "@/common/utils/helper";
-import { useSideMenuStore } from "@/stores/side-menu";
+import { computed, onMounted, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { helper as $h } from '@/common/utils/helper'
+import { useSideMenuStore } from '@/stores/side-menu'
 import {
   activeMobileMenu,
   toggleMobileMenu,
   linkTo,
   enter,
   leave,
-} from "./index";
-import { nestedMenu } from "@/layouts/side-menu";
-import dom from "@left4code/tw-starter/dist/js/dom";
-import SimpleBar from "simplebar";
+} from './index'
+import { nestedMenu } from '@/layouts/side-menu'
+import dom from '@left4code/tw-starter/dist/js/dom'
+import SimpleBar from 'simplebar'
 
-const route = useRoute();
-const router = useRouter();
-const formattedMenu = ref([]);
-const sideMenuStore = useSideMenuStore();
-const mobileMenu = computed(() => nestedMenu(sideMenuStore.menu, route));
+const route = useRoute()
+const router = useRouter()
+const formattedMenu = ref([])
+const sideMenuStore = useSideMenuStore()
+const mobileMenu = computed(() => nestedMenu(sideMenuStore.menu, route))
 
 watch(
   computed(() => route.path),
   () => {
-    formattedMenu.value = $h.toRaw(mobileMenu.value);
+    formattedMenu.value = $h.toRaw(mobileMenu.value)
   }
-);
+)
 
 onMounted(() => {
-  const scrollableElement = dom(".mobile-menu .scrollable")[0];
+  const scrollableElement = dom('.mobile-menu .scrollable')[0]
   if (scrollableElement) {
-    new SimpleBar(scrollableElement);
+    new SimpleBar(scrollableElement)
   } else {
-    console.error("Scrollable element not found.");
+    console.error('Scrollable element not found.')
   }
-  formattedMenu.value = $h.toRaw(mobileMenu.value);
-});
+  formattedMenu.value = $h.toRaw(mobileMenu.value)
+})
 </script>

@@ -1,25 +1,25 @@
-import { defineStore } from "pinia";
+import { defineStore } from 'pinia'
 
-export const useColorSchemeStore = defineStore("colorScheme", {
+export const useColorSchemeStore = defineStore('colorScheme', {
   state: () => ({
     colorSchemeValue:
-      localStorage.getItem("colorScheme") === null
-        ? "default"
-        : localStorage.getItem("colorScheme"),
+      localStorage.getItem('colorScheme') === null
+        ? 'default'
+        : localStorage.getItem('colorScheme'),
   }),
   getters: {
     colorScheme(state) {
-      if (localStorage.getItem("colorScheme") === null) {
-        localStorage.setItem("colorScheme", "default");
+      if (localStorage.getItem('colorScheme') === null) {
+        localStorage.setItem('colorScheme', 'default')
       }
 
-      return state.colorSchemeValue;
+      return state.colorSchemeValue
     },
   },
   actions: {
     setColorScheme(colorScheme) {
-      localStorage.setItem("colorScheme", colorScheme);
-      this.colorSchemeValue = colorScheme;
+      localStorage.setItem('colorScheme', colorScheme)
+      this.colorSchemeValue = colorScheme
     },
   },
-});
+})

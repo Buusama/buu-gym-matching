@@ -10,16 +10,16 @@
 </template>
 
 <script setup>
-import { onMounted, ref, inject, watch } from "vue";
-import Chart from "chart.js/auto";
+import { onMounted, ref, inject, watch } from 'vue'
+import Chart from 'chart.js/auto'
 
 const props = defineProps({
   type: {
     type: String,
     required: true,
-    default: "line",
+    default: 'line',
     validator: (value) => {
-      return ["line", "pie", "doughnut", "bar"].indexOf(value) !== -1;
+      return ['line', 'pie', 'doughnut', 'bar'].indexOf(value) !== -1
     },
   },
   data: {
@@ -33,11 +33,11 @@ const props = defineProps({
   },
   width: {
     type: [Number, String],
-    default: "auto",
+    default: 'auto',
   },
   height: {
     type: [Number, String],
-    default: "auto",
+    default: 'auto',
   },
   refKey: {
     type: String,
@@ -45,40 +45,40 @@ const props = defineProps({
   },
   class: {
     type: String,
-    default: "",
+    default: '',
   },
-});
+})
 
-const chartRef = ref();
+const chartRef = ref()
 const init = () => {
-  const canvas = chartRef.value?.getContext("2d");
+  const canvas = chartRef.value?.getContext('2d')
   const chart = new Chart(canvas, {
     type: props.type,
     data: props.data,
     options: props.options,
-  });
+  })
 
   watch(props, () => {
-    chart.data = props.data;
-    chart.options = props.options;
-    chart.update();
-  });
+    chart.data = props.data
+    chart.options = props.options
+    chart.update()
+  })
 
   // Attach ChartJs instance
-  chartRef.value.instance = chart;
-};
+  chartRef.value.instance = chart
+}
 
 const bindInstance = () => {
   if (props.refKey) {
-    const bind = inject(`bind[${props.refKey}]`);
+    const bind = inject(`bind[${props.refKey}]`)
     if (bind) {
-      bind(chartRef.value);
+      bind(chartRef.value)
     }
   }
-};
+}
 
 onMounted(() => {
-  bindInstance();
-  init();
-});
+  bindInstance()
+  init()
+})
 </script>

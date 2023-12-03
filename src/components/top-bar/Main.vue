@@ -28,7 +28,7 @@
             </div>
           </DropdownHeader>
           <DropdownDivider class="border-white/[0.08]" />
-          <DropdownItem @click="actionLogout" class="dropdown-item hover:bg-white/5">
+          <DropdownItem class="dropdown-item hover:bg-white/5" @click="actionLogout">
             <ToggleRightIcon class="w-4 h-4 mr-2" />
             Logout
           </DropdownItem>
@@ -41,27 +41,27 @@
 </template>
 
 <script lang="ts">
-import { ref, computed } from "vue";
-import { useRouter } from "vue-router";
-import { useAuthStore } from "@/stores/auth.store";
+import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth.store'
 
 export default {
-  name: "TopBar",
+  name: 'TopBar',
   setup() {
-    const searchDropdown = ref(false);
-    const authStore = useAuthStore();
-    const router = useRouter();
+    const searchDropdown = ref(false)
+    const authStore = useAuthStore()
+    const router = useRouter()
 
     const showSearchDropdown = () => {
-      searchDropdown.value = true;
-    };
+      searchDropdown.value = true
+    }
 
     const hideSearchDropdown = () => {
-      searchDropdown.value = false;
-    };
+      searchDropdown.value = false
+    }
 
     async function actionLogout() {
-      authStore.logout();
+      authStore.logout()
     }
 
     return {
@@ -69,7 +69,7 @@ export default {
       showSearchDropdown,
       hideSearchDropdown,
       actionLogout,
-    };
+    }
   },
-};
+}
 </script>

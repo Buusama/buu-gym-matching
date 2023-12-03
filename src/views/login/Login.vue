@@ -34,28 +34,28 @@
               e-commerce accounts in one place
             </div>
             <div class="intro-x mt-8">
-              <input type="text" class="intro-x login__input form-control py-3 px-4 block" placeholder="Email"
-                v-model.trim="validate.userEmail.$model" />
+              <input v-model.trim="validate.userEmail.$model" type="text" class="intro-x login__input form-control py-3 px-4 block"
+                placeholder="Email" />
               <template v-if="validate.userEmail.$error">
-                <div class="text-danger mt-3" v-for="(error, index) in validate.userEmail.$errors" :key="index">
+                <div v-for="(error, index) in validate.userEmail.$errors" :key="index" class="text-danger mt-3">
                   {{ error.$message }}
                 </div>
               </template>
-              <input type="password" class="intro-x login__input form-control py-3 px-4 block mt-4" placeholder="Password"
-                v-model.trim="validate.password.$model" @keydown.enter.exact.prevent="actionLogin" />
+              <input v-model.trim="validate.password.$model" type="password" class="intro-x login__input form-control py-3 px-4 block mt-4"
+                placeholder="Password" @keydown.enter.exact.prevent="actionLogin" />
               <template v-if="validate.password.$error">
-                <div class="text-danger mt-3" v-for="(error, index) in validate.password.$errors" :key="index">
+                <div v-for="(error, index) in validate.password.$errors" :key="index" class="text-danger mt-3">
                   {{ error.$message }}
                 </div>
               </template>
             </div>
 
             <div class="intro-x mt-5 xl:mt-8 text-center xl:text-left">
-              <button @click="actionLogin" class="btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top">
+              <button class="btn btn-primary py-3 px-4 w-full xl:w-32 xl:mr-3 align-top" @click="actionLogin">
                 Login
               </button>
-              <button @click="router.push('/register')"
-                class="btn btn-outline-secondary py-3 px-4 w-full xl:w-32 mt-3 xl:mt-0 align-top">
+              <button class="btn btn-outline-secondary py-3 px-4 w-full xl:w-32 mt-3 xl:mt-0 align-top"
+                @click="router.push('/register')">
                 Register
               </button>
             </div>
@@ -74,55 +74,55 @@
 </template>
 
 <script lang="ts">
-import { ref } from "vue";
-import { useRouter } from "vue-router";
-import { useAuthStore } from "@/stores/auth.store";
-import { helpers, email, required } from "@vuelidate/validators";
-import { useVuelidate } from "@vuelidate/core";
-import Cookies from "js-cookie";
-import { LoginRequest } from "@/api/auth/interfaces/login"
-import config from "@/config";
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth.store'
+import { helpers, email, required } from '@vuelidate/validators'
+import { useVuelidate } from '@vuelidate/core'
+import Cookies from 'js-cookie'
+import { LoginRequest } from '@/api/auth/interfaces/login'
+import config from '@/config'
 
 export default {
-  name: "LoginUser",
+  name: 'LoginUser',
   components: {},
   setup() {
-    const userEmail = ref("");
-    const password = ref("");
-    const message = ref("");
-    const authStore = useAuthStore();
-    const router = useRouter();
+    const userEmail = ref('')
+    const password = ref('')
+    const message = ref('')
+    const authStore = useAuthStore()
+    const router = useRouter()
     const formData = {
       userEmail,
       password,
-    };
+    }
     // Vuelidate
     const rules = {
       userEmail: {
-        required: helpers.withMessage("Vui lòng không bỏ trống ô này", required),
-        email: helpers.withMessage("Vui lòng nhập đúng Email", email),
+        required: helpers.withMessage('Vui lòng không bỏ trống ô này', required),
+        email: helpers.withMessage('Vui lòng nhập đúng Email', email),
       },
       password: {
-        required: helpers.withMessage("Vui lòng không bỏ trống ô này", required),
+        required: helpers.withMessage('Vui lòng không bỏ trống ô này', required),
       },
-    };
-    const validate = useVuelidate(rules, formData);
+    }
+    const validate = useVuelidate(rules, formData)
 
     async function actionLogin() {
       // validate form
-      validate.value.$touch();
+      validate.value.$touch()
 
       if (validate.value.$invalid === false) {
         const data = {
           email: userEmail.value,
           password: password.value,
-        } as LoginRequest;
+        } as LoginRequest
 
         if (Cookies.get(config.VITE_COOKIE_NAME)) {
-          authStore.logout();
+          authStore.logout()
         }
 
-        authStore.login(data);
+        authStore.login(data)
 
       }
     }
@@ -134,9 +134,9 @@ export default {
       actionLogin,
       router,
       validate,
-    };
+    }
   },
-};
+}
 </script>
 
 <style></style>

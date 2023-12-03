@@ -8,20 +8,20 @@
 </template>
 
 <script setup>
-import { inject, onMounted, ref } from "vue";
-import BalloonBlockEditor from "@ckeditor/ckeditor5-build-balloon-block";
-import { init } from "./index";
+import { inject, onMounted, ref } from 'vue'
+import BalloonBlockEditor from '@ckeditor/ckeditor5-build-balloon-block'
+import { init } from './index'
 
 const vEditorDirective = {
   mounted(el, { value }) {
-    init(el, BalloonBlockEditor, value);
+    init(el, BalloonBlockEditor, value)
   },
-};
+}
 
 const props = defineProps({
   modelValue: {
     type: String,
-    default: "",
+    default: '',
   },
   config: {
     type: Object,
@@ -29,7 +29,7 @@ const props = defineProps({
   },
   tagName: {
     type: String,
-    default: "div",
+    default: 'div',
   },
   disabled: {
     type: Boolean,
@@ -39,23 +39,23 @@ const props = defineProps({
     type: String,
     default: null,
   },
-});
+})
 
-const emit = defineEmits();
+const emit = defineEmits()
 
-const editorRef = ref();
-const cacheData = ref("");
+const editorRef = ref()
+const cacheData = ref('')
 
 const bindInstance = () => {
   if (props.refKey) {
-    const bind = inject(`bind[${props.refKey}]`);
+    const bind = inject(`bind[${props.refKey}]`)
     if (bind) {
-      bind(editorRef.value);
+      bind(editorRef.value)
     }
   }
-};
+}
 
 onMounted(() => {
-  bindInstance();
-});
+  bindInstance()
+})
 </script>

@@ -34,7 +34,7 @@
         <!-- END: Breadcrumb -->
 
         <!-- BEGIN: Account Menu -->
-        <Dropdown @click="closeUpdateAvatar" class="intro-x w-8 h-8">
+        <Dropdown class="intro-x w-8 h-8" @click="closeUpdateAvatar">
           <DropdownToggle
             tag="div"
             role="button"
@@ -42,7 +42,7 @@
           >
             <img
               alt="Buusama"
-              v-bind:src="currentUser?.avatar"
+              :src="currentUser?.avatar"
             />
           </DropdownToggle>
           <DropdownMenu class="w-56">
@@ -55,8 +55,8 @@
               </DropdownHeader>
               <DropdownDivider class="border-white/[0.08]" />
               <DropdownItem
-                @click="openChangeAvatarInput"
                 class="dropdown-item hover:bg-white/5"
+                @click="openChangeAvatarInput"
               >
                 <PenToolIcon class="w-4 h-4 mr-2" />
                 Change Avatar
@@ -83,8 +83,8 @@
               <DropdownDivider class="border-white/[0.08]" />
 
               <DropdownItem
-                @click="actionLogout"
                 class="dropdown-item hover:bg-white/5"
+                @click="actionLogout"
               >
                 <LogOutIcon class="w-4 h-4 mr-2" />
                 Logout
@@ -106,172 +106,172 @@
 </template>
 
 <script lang="ts">
-import { computed, onMounted, provide, ref, watch } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { useTopMenuStore } from "../../stores/top-menu";
-import { helper as $h } from "@/common/utils/helper";
-import MobileMenu from "../../components/mobile-menu/Main.vue";
-import DarkModeSwitcher from "../../components/dark-mode-switcher/Main.vue";
-import MainColorSwitcher from "../../components/main-color-switcher/Main.vue";
+import { computed, onMounted, provide, ref, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useTopMenuStore } from '../../stores/top-menu'
+import { helper as $h } from '@/common/utils/helper'
+import MobileMenu from '../../components/mobile-menu/Main.vue'
+import DarkModeSwitcher from '../../components/dark-mode-switcher/Main.vue'
+import MainColorSwitcher from '../../components/main-color-switcher/Main.vue'
 import {
   searchDropdown,
   showSearchDropdown,
   hideSearchDropdown,
-} from "./index";
-import { nestedMenu, linkTo } from "@/layouts/side-menu";
-import dom from "@left4code/tw-starter/dist/js/dom";
-import { useAuthStore } from "../../stores/auth-store";
-import { UserInfor } from "../../types/user-type";
-import UserService from "../../services/UserService";
+} from './index'
+import { nestedMenu, linkTo } from '@/layouts/side-menu'
+import dom from '@left4code/tw-starter/dist/js/dom'
+import { useAuthStore } from '../../stores/auth-store'
+import { UserInfor } from '../../types/user-type'
+import UserService from '../../services/UserService'
 import {
   setNotificationFailedWhenGetData,
   setNotificationToastMessage,
-} from "../../utils/MyFunction";
-import { useConversationStore } from "../../stores/conversation-store";
-import ZoomImage from "../../components/ZoomImage.vue";
-import { getDownloadURL, uploadBytesResumable } from "firebase/storage";
-import { storage } from "../../../firebase";
-import { ref as fireBaseRef } from "firebase/storage";
+} from '../../utils/MyFunction'
+import { useConversationStore } from '../../stores/conversation-store'
+import ZoomImage from '../../components/ZoomImage.vue'
+import { getDownloadURL, uploadBytesResumable } from 'firebase/storage'
+import { storage } from '../../../firebase'
+import { ref as fireBaseRef } from 'firebase/storage'
 
 export default {
   components: { DarkModeSwitcher, MobileMenu, MainColorSwitcher, ZoomImage },
   setup() {
-    const route: any = useRoute();
-    const router = useRouter();
-    const formattedMenu = ref([]);
-    const topMenuStore = useTopMenuStore();
-    const topMenu = computed(() => nestedMenu(topMenuStore.menu, route));
-    const authStore = useAuthStore();
-    const conversationStore = useConversationStore();
-    const openFileInput = ref(false);
-    const chosenFile: any = ref(null);
-    const newAvatar = ref("");
-    const uploadAvatarProgress = ref(0);
+    const route: any = useRoute()
+    const router = useRouter()
+    const formattedMenu = ref([])
+    const topMenuStore = useTopMenuStore()
+    const topMenu = computed(() => nestedMenu(topMenuStore.menu, route))
+    const authStore = useAuthStore()
+    const conversationStore = useConversationStore()
+    const openFileInput = ref(false)
+    const chosenFile: any = ref(null)
+    const newAvatar = ref('')
+    const uploadAvatarProgress = ref(0)
 
-    provide("forceActiveMenu", (pageName) => {
-      route.forceActiveMenu = pageName;
-      formattedMenu.value = $h.toRaw(topMenu.value);
-    });
+    provide('forceActiveMenu', (pageName) => {
+      route.forceActiveMenu = pageName
+      formattedMenu.value = $h.toRaw(topMenu.value)
+    })
 
     watch(
       computed(() => route.path),
       () => {
-        delete route.forceActiveMenu;
-        formattedMenu.value = $h.toRaw(topMenu.value);
+        delete route.forceActiveMenu
+        formattedMenu.value = $h.toRaw(topMenu.value)
       }
-    );
+    )
 
     onMounted(() => {
-      dom("body")
-        .removeClass("error-page")
-        .removeClass("login")
-        .addClass("main");
-      formattedMenu.value = $h.toRaw(topMenu.value);
-    });
+      dom('body')
+        .removeClass('error-page')
+        .removeClass('login')
+        .addClass('main')
+      formattedMenu.value = $h.toRaw(topMenu.value)
+    })
 
     const currentUser = computed(() => {
-      return authStore.currentUser.userInfor;
-    });
+      return authStore.currentUser.userInfor
+    })
 
     function openChangeAvatarInput() {
-      openFileInput.value = true;
+      openFileInput.value = true
     }
 
     function closeUpdateAvatar () {
-      openFileInput.value = false;
+      openFileInput.value = false
       chosenFile.value = null
     }
 
     const uploadFiles = (file) => {
       //
-      if (!file) return;
-      const sotrageRef = fireBaseRef(storage, `files/${file.name}`);
-      const uploadTask = uploadBytesResumable(sotrageRef, file);
+      if (!file) return
+      const sotrageRef = fireBaseRef(storage, `files/${file.name}`)
+      const uploadTask = uploadBytesResumable(sotrageRef, file)
 
       uploadTask.on(
-        "state_changed",
+        'state_changed',
         (snapshot) => {
           const prog = Math.round(
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          );
-          uploadAvatarProgress.value = prog;
+          )
+          uploadAvatarProgress.value = prog
         },
         (error) => {
-          setNotificationToastMessage("Can't upload an avatar", false);
+          setNotificationToastMessage("Can't upload an avatar", false)
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-            newAvatar.value = downloadURL;           
-          });
+            newAvatar.value = downloadURL           
+          })
         }
-      );
-    };
+      )
+    }
 
     async function uploadAvatar(event) {
-      chosenFile.value = event.target.files[0];
+      chosenFile.value = event.target.files[0]
 
       if (
-        chosenFile.value.name.includes(".jpg") ||
-        chosenFile.value.name.includes(".pdf") ||
-        chosenFile.value.name.includes(".eps") ||
-        chosenFile.value.name.includes(".ai") ||
-        chosenFile.value.name.includes(".webp") ||
-        chosenFile.value.name.includes(".indd") ||
-        chosenFile.value.name.includes(".raw") ||
-        chosenFile.value.name.includes(".jpeg") ||
-        chosenFile.value.name.includes(".psd") ||
-        chosenFile.value.name.includes(".png") ||
-        chosenFile.value.name.includes(".gif") ||
-        chosenFile.value.name.includes(".tiff") ||
-        chosenFile.value.name.includes(".bmp") ||
-        chosenFile.value.name.includes(".jfif")
+        chosenFile.value.name.includes('.jpg') ||
+        chosenFile.value.name.includes('.pdf') ||
+        chosenFile.value.name.includes('.eps') ||
+        chosenFile.value.name.includes('.ai') ||
+        chosenFile.value.name.includes('.webp') ||
+        chosenFile.value.name.includes('.indd') ||
+        chosenFile.value.name.includes('.raw') ||
+        chosenFile.value.name.includes('.jpeg') ||
+        chosenFile.value.name.includes('.psd') ||
+        chosenFile.value.name.includes('.png') ||
+        chosenFile.value.name.includes('.gif') ||
+        chosenFile.value.name.includes('.tiff') ||
+        chosenFile.value.name.includes('.bmp') ||
+        chosenFile.value.name.includes('.jfif')
       ) {
-        uploadFiles(chosenFile.value);
+        uploadFiles(chosenFile.value)
       } else {
-        newAvatar.value = "";
+        newAvatar.value = ''
       }
     }
 
     async function actionChangeAvatar() {
-      if (newAvatar.value !== "") {
+      if (newAvatar.value !== '') {
         const data = {
           avatar: newAvatar.value,
-        } as UserInfor;
+        } as UserInfor
 
-        const response = await UserService.updateAvatar(data, authStore.token);
+        const response = await UserService.updateAvatar(data, authStore.token)
         if (response.data) {
           if (response.data.success) {
-            setNotificationToastMessage("Change avatar successfully", true);
-            authStore.changeAvatar(newAvatar.value);
-            openFileInput.value = false;
-            chosenFile.value = null;
-            uploadAvatarProgress.value = 0;
+            setNotificationToastMessage('Change avatar successfully', true)
+            authStore.changeAvatar(newAvatar.value)
+            openFileInput.value = false
+            chosenFile.value = null
+            uploadAvatarProgress.value = 0
           } else {
-            setNotificationToastMessage(response.data.message, false);
+            setNotificationToastMessage(response.data.message, false)
           }
         } else {
-          setNotificationFailedWhenGetData();
+          setNotificationFailedWhenGetData()
         }
       }
     }
 
     async function updateTimeActive() {
-      const data = {} as UserInfor;
+      const data = {} as UserInfor
 
-      const response = await UserService.update(data, authStore.token);
+      const response = await UserService.update(data, authStore.token)
       if (response.data) {
         if (!response.data.success) {
-          setNotificationToastMessage(response.data.message, false);
+          setNotificationToastMessage(response.data.message, false)
         }
       } else {
-        setNotificationFailedWhenGetData();
+        setNotificationFailedWhenGetData()
       }
     }
 
     async function actionLogout() {
-      await authStore.logoutUser();
-      updateTimeActive();
-      await router.push("/login");
+      await authStore.logoutUser()
+      updateTimeActive()
+      await router.push('/login')
     }
 
     return {
@@ -285,7 +285,7 @@ export default {
       uploadAvatarProgress,
       chosenFile,
       closeUpdateAvatar
-    };
+    }
   },
-};
+}
 </script>

@@ -1,12 +1,12 @@
-import { ref } from "vue";
+import { ref } from 'vue'
 
 // Toggle search dropdown
-const searchDropdown = ref(false);
+const searchDropdown = ref(false)
 const showSearchDropdown = () => {
-  searchDropdown.value = true;
-};
+  searchDropdown.value = true
+}
 const hideSearchDropdown = () => {
-  searchDropdown.value = false;
-};
+  searchDropdown.value = false
+}
 
-export { searchDropdown, showSearchDropdown, hideSearchDropdown };
+export { searchDropdown, showSearchDropdown, hideSearchDropdown }

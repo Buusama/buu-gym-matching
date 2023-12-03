@@ -5,22 +5,22 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { Draggable } from "@fullcalendar/interaction";
+import { ref, onMounted } from 'vue'
+import { Draggable } from '@fullcalendar/interaction'
 
 const props = defineProps({
   options: {
     type: Object,
     default: () => ({}),
   },
-});
+})
 
-const draggableRef = ref();
+const draggableRef = ref()
 const init = () => {
-  new Draggable(draggableRef.value, props.options);
-};
+  new Draggable(draggableRef.value, props.options)
+}
 
 onMounted(() => {
-  init();
-});
+  init()
+})
 </script>

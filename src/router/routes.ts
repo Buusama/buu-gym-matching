@@ -1,10 +1,10 @@
-import Login from '@/views/login/Login.vue';
-import Home from '@/views/home/Home.vue';
-import ErrorPage from '@/views/error-page/ErrorPage.vue';
-import Member from '@/views/member/List.vue';
-import MemberCreate from '@/views/member/Create.vue';
-import MemberEdit from '@/views/member/Edit.vue';
-import SideMenu from '@/layouts/side-menu/Main.vue';
+import Login from '@/views/login/Login.vue'
+import Home from '@/views/home/Home.vue'
+import ErrorPage from '@/views/error-page/ErrorPage.vue'
+import Member from '@/views/member/List.vue'
+import MemberCreate from '@/views/member/Create.vue'
+import MemberEdit from '@/views/member/Edit.vue'
+import SideMenu from '@/layouts/side-menu/Main.vue'
 const routes = [
     {
         name: 'login',
@@ -59,6 +59,6 @@ const routes = [
         path: '/:pathMatch(.*)*',
         component: ErrorPage,
     },
-];
+]
 
-export default routes;
+export default routes

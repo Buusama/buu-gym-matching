@@ -7,45 +7,55 @@ import {
   defineComponent,
   resolveDirective,
   withDirectives,
-} from "vue";
-import dom from "@left4code/tw-starter/dist/js/dom";
-import "@left4code/tw-starter/dist/js/dropdown";
+} from 'vue'
+import dom from '@left4code/tw-starter/dist/js/dom'
+import '@left4code/tw-starter/dist/js/dropdown'
 
 const init = (el, { props, emit }) => {
-  const dropdown = tailwind.Dropdown.getOrCreateInstance(el);
+  const dropdown = tailwind.Dropdown.getOrCreateInstance(el)
   setTimeout(() => {
-    const isDropdownShowed = dom(el).find("[data-dropdown-replacer]").length;
+    const isDropdownShowed = dom(el).find('[data-dropdown-replacer]').length
     if (props.show && !isDropdownShowed) {
-      dropdown.show();
+      dropdown.show()
     } else if (!props.show && isDropdownShowed) {
-      dropdown.hide();
+      dropdown.hide()
     }
-  });
+  })
 
-  if (el["__initiated"] === undefined) {
-    el["__initiated"] = true;
+  if (el['__initiated'] === undefined) {
+    el['__initiated'] = true
 
-    el.addEventListener("show.tw.dropdown", () => {
-      emit("show");
-    });
+    el.addEventListener('show.tw.dropdown', () => {
+      emit('show')
+    })
 
-    el.addEventListener("shown.tw.dropdown", () => {
-      emit("shown");
-    });
+    el.addEventListener('shown.tw.dropdown', () => {
+      emit('shown')
+    })
 
-    el.addEventListener("hide.tw.dropdown", () => {
-      emit("hide");
-    });
+    el.addEventListener('hide.tw.dropdown', () => {
+      emit('hide')
+    })
 
-    el.addEventListener("hidden.tw.dropdown", () => {
-      emit("hidden");
-    });
+    el.addEventListener('hidden.tw.dropdown', () => {
+      emit('hidden')
+    })
   }
-};
+}
 
 // Dropdown wrapper
 const Dropdown = defineComponent({
-  name: "Dropdown",
+  name: 'Dropdown',
+  directives: {
+    dropdown: {
+      mounted(el, { value }) {
+        init(el, value)
+      },
+      updated(el, { value }) {
+        init(el, value)
+      },
+    },
+  },
   props: {
     show: {
       type: Boolean,
@@ -53,75 +63,65 @@ const Dropdown = defineComponent({
     },
     placement: {
       type: String,
-      default: "bottom-end",
+      default: 'bottom-end',
     },
     refKey: {
       type: String,
       default: null,
     },
   },
-  directives: {
-    dropdown: {
-      mounted(el, { value }) {
-        init(el, value);
-      },
-      updated(el, { value }) {
-        init(el, value);
-      },
-    },
-  },
   setup(props, { slots, attrs, emit }) {
-    const dropdownRef = ref();
-    const dropdownRefTemp = ref();
+    const dropdownRef = ref()
+    const dropdownRefTemp = ref()
 
     const bindInstance = () => {
       if (props.refKey) {
-        const bind = inject(`bind[${props.refKey}]`);
+        const bind = inject(`bind[${props.refKey}]`)
         if (bind) {
-          bind(tailwind.Dropdown.getOrCreateInstance(dropdownRef.value));
+          bind(tailwind.Dropdown.getOrCreateInstance(dropdownRef.value))
         }
       }
-    };
+    }
 
     onMounted(() => {
-      dropdownRefTemp.value = dropdownRef.value;
-      bindInstance();
-    });
+      dropdownRefTemp.value = dropdownRef.value
+      bindInstance()
+    })
 
     // Hide dropdown when route is changed
     onUnmounted(() => {
-      tailwind.Dropdown.getOrCreateInstance(dropdownRefTemp.value).hide();
-    });
+      tailwind.Dropdown.getOrCreateInstance(dropdownRefTemp.value).hide()
+    })
 
-    const dropdownDirective = resolveDirective("dropdown");
+    const dropdownDirective = resolveDirective('dropdown')
 
     return () =>
       withDirectives(
         h(
-          "div",
+          'div',
           {
-            class: "dropdown",
+            class: 'dropdown',
             ref: dropdownRef,
-            "data-tw-placement": props.placement,
+            'data-tw-placement': props.placement,
           },
           slots.default({
             dismiss: () => {
-              tailwind.Dropdown.getOrCreateInstance(dropdownRef.value).hide();
+              tailwind.Dropdown.getOrCreateInstance(dropdownRef.value).hide()
             },
           })
         ),
         [[dropdownDirective, { props, emit }]]
-      );
+      )
   },
-});
+})
 
 // Dropdown toggle
 const DropdownToggle = defineComponent({
-  name: "DropdownToggle",
+  name: 'DropdownToggle',
   props: {
     tag: {
       type: String,
-      default: "button",
+      default: 'button',
     },
   },
   setup(props, { slots, attrs, emit }) {
@@ -129,37 +129,37 @@ const DropdownToggle = defineComponent({
       h(
         props.tag,
         {
-          class: "dropdown-toggle",
-          "aria-expanded": false,
-          "data-tw-toggle": "dropdown",
+          class: 'dropdown-toggle',
+          'aria-expanded': false,
+          'data-tw-toggle': 'dropdown',
         },
         slots.default()
-      );
+      )
   },
-});
+})
 
 // Dropdown menu
 const DropdownMenu = defineComponent({
-  name: "DropdownMenu",
+  name: 'DropdownMenu',
   setup(props, { slots, attrs, emit }) {
     return () =>
       h(
-        "div",
+        'div',
         {
-          class: "dropdown-menu",
+          class: 'dropdown-menu',
         },
         slots.default()
-      );
+      )
   },
-});
+})
 
 // Dropdown content
 const DropdownContent = defineComponent({
-  name: "DropdownContent",
+  name: 'DropdownContent',
   props: {
     tag: {
       type: String,
-      default: "ul",
+      default: 'ul',
     },
   },
   setup(props, { slots, attrs, emit }) {
@@ -167,116 +167,116 @@ const DropdownContent = defineComponent({
       h(
         props.tag,
         {
-          class: "dropdown-content",
+          class: 'dropdown-content',
         },
         slots.default()
-      );
+      )
   },
-});
+})
 
 // Dropdown item
 const DropdownItem = defineComponent({
-  name: "DropdownItem",
+  name: 'DropdownItem',
   props: {
     tag: {
       type: String,
-      default: "a",
+      default: 'a',
     },
     class: {
       type: String,
-      default: "",
+      default: '',
     },
   },
   setup(props, { slots, attrs, emit }) {
     return () =>
-      h("li", [
+      h('li', [
         h(
           props.tag,
           {
-            class: ["dropdown-item cursor-pointer", props.class],
+            class: ['dropdown-item cursor-pointer', props.class],
           },
           slots.default()
         ),
-      ]);
+      ])
   },
-});
+})
 
 // Dropdown header
 const DropdownHeader = defineComponent({
-  name: "DropdownHeader",
+  name: 'DropdownHeader',
   props: {
     tag: {
       type: String,
-      default: "h6",
+      default: 'h6',
     },
     class: {
       type: String,
-      default: "",
+      default: '',
     },
   },
   setup(props, { slots, attrs, emit }) {
     return () =>
-      h("li", [
+      h('li', [
         h(
           props.tag,
           {
-            class: ["dropdown-header", props.class],
+            class: ['dropdown-header', props.class],
           },
           slots.default()
         ),
-      ]);
+      ])
   },
-});
+})
 
 // Dropdown footer
 const DropdownFooter = defineComponent({
-  name: "DropdownFooter",
+  name: 'DropdownFooter',
   props: {
     tag: {
       type: String,
-      default: "div",
+      default: 'div',
     },
     class: {
       type: String,
-      default: "",
+      default: '',
     },
   },
   setup(props, { slots, attrs, emit }) {
     return () =>
-      h("li", [
+      h('li', [
         h(
           props.tag,
           {
-            class: ["dropdown-footer", props.class],
+            class: ['dropdown-footer', props.class],
           },
           slots.default()
         ),
-      ]);
+      ])
   },
-});
+})
 
 // Dropdown divider
 const DropdownDivider = defineComponent({
-  name: "DropdownDivider",
+  name: 'DropdownDivider',
   props: {
     tag: {
       type: String,
-      default: "hr",
+      default: 'hr',
     },
     class: {
       type: String,
-      default: "",
+      default: '',
     },
   },
   setup(props, { slots, attrs, emit }) {
     return () =>
-      h("li", [
+      h('li', [
         h(props.tag, {
-          class: ["dropdown-divider", props.class],
+          class: ['dropdown-divider', props.class],
         }),
-      ]);
+      ])
   },
-});
+})
 
 export {
   Dropdown,
@@ -287,4 +287,4 @@ export {
   DropdownHeader,
   DropdownFooter,
   DropdownDivider,
-};
+}

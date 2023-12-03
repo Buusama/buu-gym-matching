@@ -8,7 +8,7 @@
     "preview": "vite preview",
     "build-only": "vite build",
     "type-check": "vue-tsc --noEmit -p tsconfig.app.json --composite false",
-    "lint": "eslint \"{src,apps,libs,test}/**/*{.js,.ts,.vue}\" --fix"
+    "lint": "eslint  \"{src,apps,libs,test}/**/*{.js,.ts,.vue}\" --fix"
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-classic": "^40.0.0",

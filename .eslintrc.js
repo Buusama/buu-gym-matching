@@ -13,13 +13,13 @@ module.exports = {
   //   reactive: true
   // },
   // 后面的配置会覆盖前者
-  extends: ['eslint:recommended', 'plugin:vue/vue3-recommended'],
+  extends: ['eslint:recommended', 'plugin:vue/vue3-recommended', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended',],
   parserOptions: {
     ecmaVersion: 'latest',
     parser: '@typescript-eslint/parser',
     sourceType: 'module'
   },
-  plugins: ['vue', '@typescript-eslint'],
+  plugins: ['vue', '@typescript-eslint', '@typescript-eslint/eslint-plugin'],
   rules: {
     // js 处理
     'no-undef': 0, // 未命名变量不报错：当未命名变量的检查交给 ts 类型检查器时使用

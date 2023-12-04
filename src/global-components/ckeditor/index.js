@@ -19,17 +19,17 @@ const init = async (el, editorBuild, { props, emit, cacheData }) => {
     const data = editor.getData()
     cacheData = data
     emit('update:modelValue', data)
-  })
+  });
 
   // Set on focus event
   editor.editing.view.document.on('focus', (evt) => {
     emit('focus', evt, editor)
-  })
+  });
 
   // Set on blur event
   editor.editing.view.document.on('blur', (evt) => {
     emit('blur', evt, editor)
-  })
+  });
 
   // Set on ready event
   emit('ready', editor)
@@ -40,6 +40,6 @@ const init = async (el, editorBuild, { props, emit, cacheData }) => {
       el.CKEditor.setData(props.modelValue)
     }
   })
-}
+};
 
 export { init }

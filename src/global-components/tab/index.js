@@ -44,7 +44,7 @@ const init = (el, { props, emit }) => {
 
         if (key === props.selectedIndex) {
           const tab = tailwind.Tab.getOrCreateInstance(
-            dom(el).find('.nav-link')[0]
+            dom(el).find('.nav-link')[0],
           )
           tab.show()
           dom(tabPanes).removeAttr('style')
@@ -56,10 +56,10 @@ const init = (el, { props, emit }) => {
 
           navLink.addEventListener('show.tw.tab', () => {
             emit('change', key)
-          })
+          });
         }
       })
-  })
+  });
 }
 
 // Tab wrapper
@@ -105,7 +105,7 @@ const TabList = defineComponent({
           class: 'nav',
           role: 'tablist',
         },
-        slots.default()
+        slots.default(),
       )
   },
 })
@@ -142,9 +142,9 @@ const Tab = defineComponent({
               type: 'button',
               role: 'tab',
             },
-            slots.default()
+            slots.default(),
           ),
-        ]
+        ],
       )
   },
 })
@@ -158,7 +158,7 @@ const TabPanels = defineComponent({
         {
           class: 'tab-content w-full',
         },
-        slots.default()
+        slots.default(),
       )
   },
 })
@@ -173,7 +173,7 @@ const TabPanel = defineComponent({
           class: 'tab-pane',
           role: 'tabpanel',
         },
-        slots.default()
+        slots.default(),
       )
   },
 })

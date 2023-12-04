@@ -26,7 +26,7 @@ const PreviewComponent = defineComponent({
           toggle: () => {
             previewCode.value = !previewCode.value
           },
-        })
+        }),
       )
   },
 })
@@ -120,7 +120,7 @@ const Highlight = defineComponent({
                   class: 'w-4 h-4 mr-2',
                 }),
                 copyText.value,
-              ]
+              ],
             )
           : '',
         withDirectives(
@@ -145,17 +145,17 @@ const Highlight = defineComponent({
                   {
                     class: ['!-mb-[60px] !inline', props.type],
                   },
-                  slots.default()
+                  slots.default(),
                 ),
                 h('textarea', {
                   ref: copySourceEl,
                   value: copySource.value,
                   class: 'absolute w-0 h-0 p-0',
                 }),
-              ]
-            )
+              ],
+            ),
           ),
-          [[highlightDirective, { props, emit, copySource }]]
+          [[highlightDirective, { props, emit, copySource }]],
         ),
       ])
   },

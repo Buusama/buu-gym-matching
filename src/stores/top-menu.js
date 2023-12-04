@@ -16,21 +16,20 @@ export const useTopMenuStore = defineStore('topMenu', {
           {
             icon: '',
             pageName: 'side-menu-page-2-1',
-            title: 'Bitacora Recepción'
+            title: 'Bitacora Recepción',
           },
           {
             icon: '',
             pageName: 'side-menu-page-2-2',
-            title: 'Calendario Reservas'
+            title: 'Calendario Reservas',
           },
           {
             icon: '',
             pageName: 'side-menu-page-2-3',
-            title: 'Calendario Amenidades'
-          }
-        ]
+            title: 'Calendario Amenidades',
+          },
+        ],
       },
-      
     ],
   }),
 })

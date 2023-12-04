@@ -23,19 +23,19 @@ const init = (el, { props, emit }) => {
 
     el.addEventListener('show.tw.modal', () => {
       emit('show')
-    })
+    });
 
     el.addEventListener('shown.tw.modal', () => {
       emit('shown')
-    })
+    });
 
     el.addEventListener('hide.tw.modal', () => {
       emit('hide')
-    })
+    });
 
     el.addEventListener('hidden.tw.modal', () => {
       emit('hidden')
-    })
+    });
   }
 }
 
@@ -88,7 +88,7 @@ const Modal = defineComponent({
 
     onMounted(() => {
       bindInstance()
-    })
+    });
 
     const modalDirective = resolveDirective('modal')
 
@@ -119,13 +119,13 @@ const Modal = defineComponent({
                     dismiss: () => {
                       tailwind.Modal.getOrCreateInstance(modalRef.value).hide()
                     },
-                  })
+                  }),
                 ),
-              ]
+              ],
             ),
-          ]
+          ],
         ),
-        [[modalDirective, { props, emit }]]
+        [[modalDirective, { props, emit }]],
       )
   },
 })
@@ -140,7 +140,7 @@ const ModalHeader = defineComponent({
         {
           class: 'modal-header',
         },
-        slots.default()
+        slots.default(),
       )
   },
 })
@@ -155,7 +155,7 @@ const ModalBody = defineComponent({
         {
           class: 'modal-body',
         },
-        slots.default()
+        slots.default(),
       )
   },
 })
@@ -170,7 +170,7 @@ const ModalFooter = defineComponent({
         {
           class: 'modal-footer',
         },
-        slots.default()
+        slots.default(),
       )
   },
 })

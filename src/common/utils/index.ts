@@ -5,5 +5,4 @@ export default (app: any) => {
   app.use(faker)
   app.use(helper)
   app.use(lodash)
-
-}
+};

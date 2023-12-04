@@ -82,7 +82,6 @@ export default (app) => {
   app.component('Source', Source)
   app.component('Highlight', Highlight)
 
-
   for (const [key, icon] of Object.entries(LucideIcons)) {
     app.component(key, icon)
   }

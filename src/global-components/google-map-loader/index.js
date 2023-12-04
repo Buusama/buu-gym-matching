@@ -2,7 +2,7 @@ import { Loader } from '@googlemaps/js-api-loader'
 
 const initializeMap = async (mapRef, mapConfig) => {
   await new Loader({
-    apiKey: mapConfig.apiKey
+    apiKey: mapConfig.apiKey,
   }).load()
 
   const google = window.google
@@ -10,8 +10,8 @@ const initializeMap = async (mapRef, mapConfig) => {
 
   return {
     map: map,
-    google: google
+    google: google,
   }
-}
+};
 
 export { initializeMap }

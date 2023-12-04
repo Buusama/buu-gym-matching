@@ -66,7 +66,9 @@ const helpers = {
   },
 
   timeAgo(time: string): string | boolean {
-    const date = new Date((time || '').replace(/-/g, '/').replace(/[TZ]/g, ' '))
+    const date = new Date(
+      (time || '').replace(/-/g, '/').replace(/[TZ]/g, ' '),
+    )
     const diff = (new Date().getTime() - date.getTime()) / 1000
     const dayDiff = Math.floor(diff / 86400)
 
@@ -97,13 +99,16 @@ const helpers = {
     const days = Math.round(milliseconds / 86400000)
     const hours = Math.round((milliseconds % 86400000) / 3600000)
     let minutes = Math.round(((milliseconds % 86400000) % 3600000) / 60000)
-    const seconds = Math.round(((milliseconds % 86400000) % 3600000) % 60000 / 1000)
+    const seconds = Math.round(
+      (((milliseconds % 86400000) % 3600000) % 60000) / 1000,
+    )
 
     if (seconds < 30 && seconds >= 0) {
       minutes += 1
     }
 
-    const padZero = (value: number): string => (value < 10 ? '0' + value : value.toString())
+    const padZero = (value: number): string =>
+      value < 10 ? '0' + value : value.toString()
 
     return {
       days: padZero(days),
@@ -147,7 +152,7 @@ const helpers = {
           tempColors[key] = (opacity = 1) =>
             `rgb(${parseInt(aRgbHex[0], 16)} ${parseInt(
               aRgbHex[1],
-              16
+              16,
             )} ${parseInt(aRgbHex[2], 16)} / ${opacity})`
         }
       } else {
@@ -160,6 +165,6 @@ const helpers = {
 
 const install = (app: any) => {
   app.config.globalProperties.$h = helpers
-}
+};
 
 export { install as default, helpers as helper }

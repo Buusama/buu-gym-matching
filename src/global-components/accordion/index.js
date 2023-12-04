@@ -22,7 +22,7 @@ const init = (el, { props, emit }) => {
       })
 
       const accordion = tailwind.Accordion.getOrCreateInstance(
-        dom(el).find("[data-tw-toggle='collapse']")[0]
+        dom(el).find("[data-tw-toggle='collapse']")[0],
       )
 
       if (props.selectedIndex === null) {
@@ -37,10 +37,10 @@ const init = (el, { props, emit }) => {
 
         accordionButton.addEventListener('show.tw.accordion', () => {
           emit('change', key)
-        })
+        });
       }
     })
-}
+};
 
 // Accordion wrapper
 const AccordionGroup = defineComponent({
@@ -74,9 +74,9 @@ const AccordionGroup = defineComponent({
           {
             class: 'accordion',
           },
-          slots.default()
+          slots.default(),
         ),
-        [[accordionDirective, { props, emit }]]
+        [[accordionDirective, { props, emit }]],
       )
   },
 })
@@ -90,7 +90,7 @@ const AccordionItem = defineComponent({
         {
           class: 'accordion-item',
         },
-        slots.default()
+        slots.default(),
       )
   },
 })
@@ -119,9 +119,9 @@ const Accordion = defineComponent({
               'aria-expanded': false,
               'data-tw-toggle': 'collapse',
             },
-            slots.default()
+            slots.default(),
           ),
-        ]
+        ],
       )
   },
 })
@@ -147,9 +147,9 @@ const AccordionPanel = defineComponent({
             {
               class: `accordion-body ${props.class}`,
             },
-            slots.default()
+            slots.default(),
           ),
-        ]
+        ],
       )
   },
 })

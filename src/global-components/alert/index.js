@@ -14,19 +14,19 @@ const init = (el, { props, emit }) => {
 
     el.addEventListener('show.tw.alert', () => {
       emit('show')
-    })
+    });
 
     el.addEventListener('shown.tw.alert', () => {
       emit('shown')
-    })
+    });
 
     el.addEventListener('hide.tw.alert', () => {
       emit('hide')
-    })
+    });
 
     el.addEventListener('hidden.tw.alert', () => {
       emit('hidden')
-    })
+    });
   }
 }
 
@@ -66,9 +66,9 @@ const Alert = defineComponent({
             dismiss: () => {
               tailwind.Alert.getOrCreateInstance(alertRef.value).hide()
             },
-          })
+          }),
         ),
-        [[alertDirective, { props, emit }]]
+        [[alertDirective, { props, emit }]],
       )
   },
 })

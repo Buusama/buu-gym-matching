@@ -32,9 +32,9 @@ const init = (originalEl, clonedEl, props, emit, computedOptions) => {
   clonedEl.TomSelect.on('change', function (selectedItems) {
     emit(
       'update:modelValue',
-      Array.isArray(selectedItems) ? [...selectedItems] : selectedItems
+      Array.isArray(selectedItems) ? [...selectedItems] : selectedItems,
     )
-  })
+  });
 }
 
 const getOptions = (options, tempOptions = []) => {
@@ -47,7 +47,7 @@ const getOptions = (options, tempOptions = []) => {
   })
 
   return tempOptions
-}
+};
 
 const updateValue = (
   originalEl,
@@ -55,11 +55,11 @@ const updateValue = (
   modelValue,
   props,
   emit,
-  computedOptions
+  computedOptions,
 ) => {
   // Remove old options
   for (const [optionKey, option] of Object.entries(
-    clonedEl.TomSelect.options
+    clonedEl.TomSelect.options,
   )) {
     if (
       !getOptions(dom(clonedEl).prev().children()).filter((optionEl) => {
@@ -73,7 +73,7 @@ const updateValue = (
   // Update border style
   dom(clonedEl.TomSelect.wrapper).css(
     'border-color',
-    dom(originalEl).css('border-color')
+    dom(originalEl).css('border-color'),
   )
 
   // Add new options
@@ -85,7 +85,7 @@ const updateValue = (
         text: dom(this).text(),
         value: dom(this).attr('value'),
       })
-    })
+    });
 
   // Refresh options
   clonedEl.TomSelect.refreshOptions(false)

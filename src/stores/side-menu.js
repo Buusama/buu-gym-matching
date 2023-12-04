@@ -16,19 +16,19 @@ export const useSideMenuStore = defineStore('sideMenu', {
           {
             icon: '',
             pageName: 'list-members',
-            title: 'Danh sách hội viên'
+            title: 'Danh sách hội viên',
           },
           {
             icon: '',
             pageName: 'checkin-history',
-            title: 'Lịch sử checkin'
+            title: 'Lịch sử checkin',
           },
           {
             icon: '',
             pageName: 'create-member',
-            title: 'Thêm mới hội viên'
-          }
-        ]
+            title: 'Thêm mới hội viên',
+          },
+        ],
       },
     ],
   }),

@@ -11,5 +11,6 @@ export default {
     create: '/members',
     detail: (id: string) => `/members/${id}`,
     update: (id: string) => `/members/${id}`,
+    delete: (id: string) => `/members/${id}`,
   },
 }

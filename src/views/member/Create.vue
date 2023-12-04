@@ -112,6 +112,9 @@
               >
                 Lưu
               </button>
+              <router-link :to="{ name: 'list-members' }" tag="a" class="btn btn-outline-secondary ml-3 w-20 mt-3">
+                Hủy
+              </router-link>
             </div>
             <div class="w-52 mx-auto xl:mr-0 xl:ml-6">
               <label for="create-member-form-8" class="form-label">Avatar</label>

@@ -17,6 +17,7 @@ export const useSideMenuStore = defineStore('sideMenu', {
             icon: '',
             pageName: 'list-members',
             title: 'Danh sách hội viên',
+            path: '/members'
           },
           {
             icon: '',

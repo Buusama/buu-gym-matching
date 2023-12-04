@@ -17,7 +17,7 @@ const routes = [
     meta: { requiresAuth: true },
     children: [
       {
-        path: 'list',
+        path: '',
         name: 'list-members',
         component: Member,
       },

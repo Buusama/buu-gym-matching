@@ -1,6 +1,7 @@
 <template>
   <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
     <h2 class="text-lg font-medium mr-auto">Danh sách hội viên</h2>
+
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
       <router-link :to="{ name: 'create-member' }" tag="a" class="btn btn-primary shadow-md mr-2">
         Thêm mới hội viên
@@ -93,6 +94,26 @@
     <div class="overflow-x-auto scrollbar-hidden">
       <div id="tabulator" ref="tableRef" class="mt-5 table-report table-report--tabulator"></div>
     </div>
+
+    <!-- Sử dụng Modal component -->
+    <Modal :show="isModalVisible" @hide="hideDeleteConfirmationModal">
+      <ModalBody>
+        <div class="p-5 text-center">
+          <XCircleIcon class="w-16 h-16 text-theme-6 mx-auto mt-3" />
+          <div class="text-3xl mt-5">Are you sure?</div>
+          <div class="text-gray-600 mt-2">
+            Bạn có chắc muốn xóa hội viên này không? <br />Thay tác này sẽ không thể hoàn tác
+          </div>
+        </div>
+        <div class="px-5 pb-8 text-center">
+          <button type="button" class="btn btn-outline-secondary w-24 mr-1" @click="hideDeleteConfirmationModal">
+            Hủy
+          </button>
+          <button type="button" class="btn btn-danger w-24" @click="deleteMemberById">Xóa</button>
+        </div>
+      </ModalBody>
+    </Modal>
+    <!-- END: Delete Confirmation Modal -->
   </div>
   <!-- END: HTML Table Data -->
 </template>
@@ -104,10 +125,14 @@ import { createIcons, icons } from 'lucide'
 import Tabulator from 'tabulator-tables'
 import dom from '@left4code/tw-starter/dist/js/dom'
 import { upperCaseValue } from '@/common/utils/helpers'
-import { getMembers } from '@/api/members'
+import { getMembers, deleteMember } from '@/api/members'
+import MemberEdit from '@/views/member/Edit.vue'
+
 import router from '@/router'
 const tableRef = ref()
 const tabulator = ref()
+const isModalVisible = ref(false)
+const deleteMemberId = ref(null)
 const filter = reactive({
   field: 'name',
   type: 'like',
@@ -249,6 +274,7 @@ const initTabulator = () => {
         vertAlign: 'middle',
         print: false,
         download: false,
+        headerSort: false,
         formatter(cell) {
           return `<div class="flex items-center lg:justify-center ${cell.getData().status ? 'text-success' : 'text-danger'
             }">
@@ -262,28 +288,41 @@ const initTabulator = () => {
         minWidth: 100,
         field: 'actions',
         responsive: 1,
-        hozAlign: 'center',
+        hozAlign: 'left',
         vertAlign: 'middle',
         print: false,
         download: false,
+        headerSort: false,
         formatter(cell) {
-          const a = dom(`<div class="flex lg:justify-center items-center">
-                <a class="flex items-center mr-3" href="javascript:;">
-                  <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> Edit
-                </a>
-              </div>`)
-          dom(a).on('click', function () {
-            // On click actions alert cell.getData().id
-            // alert(cell.getData().id);
+          const editButton = dom(`
+            <a class="flex items-center mr-3 text-primary" href="javascript:;">
+                <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> Chỉnh sửa
+            </a>`);
+
+          dom(editButton).on('click', function () {
+            const memberId = cell.getData().id;
             router.push({
               name: 'edit-member',
               params: {
-                id: cell.getData().id,
+                id: memberId,
               },
-            })
-          })
+            });
+          });
 
-          return a[0]
+          const deleteButton = dom(`
+            <a class="flex items-center mr-3 text-danger" href="javascript:;" data-toggle="modal"
+                    data-target="#delete-confirmation-modal">
+                <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i>Xóa
+            </a>`);
+
+          dom(deleteButton).on('click', function () {
+            showDeleteConfirmationModal(cell.getData().id);
+          });
+          const container = dom('<div class="flex lg:justify-center items-center"></div>');
+          container.append(editButton[0]);
+          container.append(deleteButton[0]);
+
+          return container[0];
         },
       },
 
@@ -330,6 +369,21 @@ const initTabulator = () => {
   })
 }
 
+const showDeleteConfirmationModal = (id) => {
+  deleteMemberId.value = id;
+  isModalVisible.value = true
+}
+
+const hideDeleteConfirmationModal = () => {
+  deleteMemberId.value = null
+  isModalVisible.value = false
+}
+
+const deleteMemberById = async () => {
+  await deleteMember(deleteMemberId.value)
+  hideDeleteConfirmationModal()
+  tabulator.value.replaceData()
+}
 // Redraw table onresize
 const reInitOnResizeWindow = () => {
   window.addEventListener('resize', () => {

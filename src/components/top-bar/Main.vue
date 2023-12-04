@@ -12,19 +12,16 @@
 
     <!-- BEGIN: Account Menu -->
     <Dropdown class="intro-x w-8 h-8">
-      <DropdownToggle
-        tag="div"
-        role="button"
-        class="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in"
-      >
+      <DropdownToggle tag="div" role="button"
+        class="dropdown-toggle w-8 h-8 rounded-full overflow-hidden shadow-lg image-fit zoom-in">
         <img alt="Buusama" src="@/assets/images/profile-5.jpg" />
       </DropdownToggle>
       <DropdownMenu class="w-56">
         <DropdownContent class="bg-primary text-white">
           <DropdownHeader tag="div" class="!font-normal">
-            <div class="font-medium">John</div>
+            <div class="font-medium">{{ currentUser.name }}</div>
             <div class="text-xs text-white/70 dark:text-slate-500 mt-2">
-              A man with big love
+              {{ currentUser.role === 1 ? 'Admin' : 'Member'  }}: {{ currentUser.email }}
             </div>
           </DropdownHeader>
           <DropdownDivider class="border-white/[0.08]" />
@@ -44,7 +41,6 @@
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.store'
-
 export default {
   name: 'TopBar',
   setup() {
@@ -63,12 +59,15 @@ export default {
     async function actionLogout() {
       authStore.logout()
     }
-
+    const currentUser = computed(
+      () => JSON.parse(authStore.currentUser ?? "")
+    )
     return {
       searchDropdown,
       showSearchDropdown,
       hideSearchDropdown,
       actionLogout,
+      currentUser,
     }
   },
 }

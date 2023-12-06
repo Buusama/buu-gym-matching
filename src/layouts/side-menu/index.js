@@ -7,8 +7,10 @@ const findActiveMenu = (subMenu, route) => {
     if (
       ((route.forceActiveMenu !== undefined &&
         item.pageName === route.forceActiveMenu) ||
-        (route.forceActiveMenu === undefined &&
-          item.pageName === route.name)) &&
+        (route.forceActiveMenu === undefined && item.pageName === route.name) ||
+        (route.matched &&
+          route.matched.length > 1 &&
+          route.matched[route.matched.length - 2].path === item.path)) &&
       !item.ignore
     ) {
       match = true
@@ -17,7 +19,7 @@ const findActiveMenu = (subMenu, route) => {
     }
   })
   return match
-};
+}
 
 const nestedMenu = (menu, route) => {
   menu.forEach((item, key) => {
@@ -28,9 +30,11 @@ const nestedMenu = (menu, route) => {
           item.pageName === route.forceActiveMenu) ||
           (route.forceActiveMenu === undefined &&
             item.pageName === route.name) ||
-          (item.subMenu && findActiveMenu(item.subMenu, route))) &&
+          (item.subMenu && findActiveMenu(item.subMenu, route)) ||
+          (route.matched &&
+            route.matched.length > 1 &&
+            route.matched[route.matched.length - 2].path === item.path)) &&
         !item.ignore
-
       if (item.subMenu) {
         menuItem.activeDropdown = findActiveMenu(item.subMenu, route)
         menuItem = {
@@ -42,7 +46,7 @@ const nestedMenu = (menu, route) => {
   })
 
   return menu
-};
+}
 
 const linkTo = (menu, router, event) => {
   if (menu.subMenu) {
@@ -57,10 +61,10 @@ const linkTo = (menu, router, event) => {
 
 const enter = (el, done) => {
   dom(el).slideDown(300)
-};
+}
 
 const leave = (el, done) => {
   dom(el).slideUp(300)
-};
+}
 
 export { nestedMenu, linkTo, enter, leave }

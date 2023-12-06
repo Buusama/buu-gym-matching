@@ -165,6 +165,6 @@ const helpers = {
 
 const install = (app: any) => {
   app.config.globalProperties.$h = helpers
-};
+}
 
 export { install as default, helpers as helper }

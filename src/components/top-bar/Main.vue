@@ -4,8 +4,15 @@
     <!-- BEGIN: Breadcrumb -->
     <nav aria-label="breadcrumb" class="-intro-x mr-auto hidden sm:flex">
       <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="#">Application</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+        <li v-for="(item, index) in routeMatched" :key="index" class="breadcrumb-item"
+          :class="{ active: index === routeMatched.length - 1 }">
+          <template v-if="index === routeMatched.length - 1">
+            {{ item.meta.title }}
+          </template>
+          <template v-else>
+            <router-link :to="item.path">{{ item.meta.title }}</router-link>
+          </template>
+        </li>
       </ol>
     </nav>
     <!-- END: Breadcrumb -->
@@ -21,7 +28,7 @@
           <DropdownHeader tag="div" class="!font-normal">
             <div class="font-medium">{{ currentUser.name }}</div>
             <div class="text-xs text-white/70 dark:text-slate-500 mt-2">
-              {{ currentUser.role === 1 ? 'Admin' : 'Member'  }}: {{ currentUser.email }}
+              {{ currentUser.role === 1 ? 'Admin' : 'Member' }}: {{ currentUser.email }}
             </div>
           </DropdownHeader>
           <DropdownDivider class="border-white/[0.08]" />
@@ -48,6 +55,10 @@ export default {
     const authStore = useAuthStore()
     const router = useRouter()
 
+    const routeMatched = computed(() => {
+      return router.currentRoute.value.matched.filter(item => item.meta && item.meta.title);
+    });
+    
     const showSearchDropdown = () => {
       searchDropdown.value = true
     }
@@ -68,6 +79,7 @@ export default {
       hideSearchDropdown,
       actionLogout,
       currentUser,
+      routeMatched
     }
   },
 }

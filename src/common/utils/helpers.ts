@@ -47,7 +47,7 @@ export const showMessage = (message: string, success: boolean): void => {
 
 export const upperCaseValue = (value: string) => {
   return value.toUpperCase()
-};
+}
 
 export function getMinuteEvery(step: number) {
   const minutes = []

@@ -17,17 +17,12 @@ export const useSideMenuStore = defineStore('sideMenu', {
             icon: '',
             pageName: 'list-members',
             title: 'Danh sách hội viên',
-            path: '/members'
+            path: '/members',
           },
           {
             icon: '',
             pageName: 'checkin-history',
             title: 'Lịch sử checkin',
-          },
-          {
-            icon: '',
-            pageName: 'create-member',
-            title: 'Thêm mới hội viên',
           },
         ],
       },

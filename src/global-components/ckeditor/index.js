@@ -40,6 +40,6 @@ const init = async (el, editorBuild, { props, emit, cacheData }) => {
       el.CKEditor.setData(props.modelValue)
     }
   })
-};
+}
 
 export { init }

@@ -12,42 +12,52 @@ const routes = [
     component: Login,
   },
   {
-    path: '/members',
-    component: SideMenu,
-    meta: { requiresAuth: true },
-    children: [
-      {
-        path: '',
-        name: 'list-members',
-        component: Member,
-      },
-      {
-        path: 'create',
-        name: 'create-member',
-        component: MemberCreate,
-      },
-      {
-        path: 'checkin',
-        name: 'checkin-history',
-        component: Home,
-      },
-      {
-        path: ':id/edit',
-        name: 'edit-member',
-        component: MemberEdit,
-      },
-    ],
-  },
-  {
     name: 'home',
     path: '/',
     component: SideMenu,
-    meta: { requiresAuth: true },
+    meta: { requiresAuth: true, title: 'Trang chủ' },
     children: [
       {
         path: '/',
         name: 'dashboard',
         component: Home,
+        meta: { requiresAuth: true, title: 'Trang chủ' },
+      },
+      {
+        path: '/members',
+        name: 'members',
+        meta: { requiresAuth: true, title: 'Hội viên' },
+        children: [
+          {
+            path: '',
+            name: 'list-members',
+            component: Member,
+            meta: { requiresAuth: true, title: 'Danh sách hội viên' },
+          },
+          {
+            path: 'create',
+            name: 'create-member',
+            component: MemberCreate,
+            meta: { requiresAuth: true, title: 'Thêm hội viên' },
+          },
+          {
+            path: 'checkin',
+            children: [
+              {
+                path: '',
+                name: 'checkin-history',
+                component: Home,
+                meta: { requiresAuth: true, title: 'Lịch sử checkin' },
+              },
+            ],
+          },
+          {
+            path: ':id/edit',
+            name: 'edit-member',
+            component: MemberEdit,
+            meta: { requiresAuth: true, title: 'Chỉnh sửa hội viên' },
+          },
+        ],
       },
     ],
   },

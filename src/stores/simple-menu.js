@@ -5,13 +5,26 @@ export const useSimpleMenuStore = defineStore('simpleMenu', {
     menu: [
       {
         icon: 'HomeIcon',
-        pageName: 'simple-menu-page-1',
-        title: 'Page 1',
+        pageName: 'dashboard',
+        title: 'Home',
       },
+      'devider',
       {
-        icon: 'HomeIcon',
-        pageName: 'simple-menu-page-2',
-        title: 'Page 2',
+        icon: 'UserIcon',
+        title: 'Hội Viên',
+        subMenu: [
+          {
+            icon: '',
+            pageName: 'list-members',
+            title: 'Danh sách hội viên',
+            path: '/members',
+          },
+          {
+            icon: '',
+            pageName: 'checkin-history',
+            title: 'Lịch sử checkin',
+          },
+        ],
       },
     ],
   }),

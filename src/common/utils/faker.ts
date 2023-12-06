@@ -245,7 +245,7 @@ for (let i = 0; i < 20; i++) {
 const install = (app: any) => {
   app.config.globalProperties.$f = () => {
     return fakerData
-  };
-}
+  }
+};
 
 export { install as default, fakerData as faker }

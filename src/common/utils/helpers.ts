@@ -25,7 +25,7 @@ export const showMessage = (message: string, success: boolean): void => {
       {
         showIcon: true,
         type: 'danger',
-        timeout: 1000,
+        timeout: 3000,
         transition: 'slide',
       },
     )
@@ -38,7 +38,7 @@ export const showMessage = (message: string, success: boolean): void => {
       {
         showIcon: true,
         type: 'success',
-        timeout: 1000,
+        timeout: 3000,
         transition: 'slide',
       },
     )

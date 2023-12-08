@@ -46,10 +46,12 @@
                       <Litepicker
                         v-model="date"
                         :options="{
-                          autoApply: false,
+                          
                           showWeekNumbers: true,
+                          maxDate: new Date(),
+                          autoRefresh: true,
                           dropdowns: {
-                            minYear: 1990,
+                            minYear: 1900,
                             maxYear: null,
                             months: true,
                             years: true,
@@ -217,7 +219,6 @@ const createMemberFunc = async () => {
   formData.append("address", data.address);
   formData.append("birth_date", data.birth_date);
 
-  console.log(data.birth_date);
   const res = await createMember(formData);
   if (res) {
     showMessage("Thêm mới hội viên thành công", true);

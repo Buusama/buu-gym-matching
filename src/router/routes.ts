@@ -18,7 +18,7 @@ const routes = [
     meta: { requiresAuth: true, title: 'Trang chủ' },
     children: [
       {
-        path: '/',
+        path: '',
         name: 'dashboard',
         component: Home,
         meta: { requiresAuth: true, title: 'Dashboard' },
@@ -42,8 +42,8 @@ const routes = [
                 name: 'create-member',
                 component: MemberCreate,
                 meta: { requiresAuth: true, title: 'Thêm hội viên' },
-              }
-            ]
+              },
+            ],
           },
           {
             path: 'checkin',
@@ -87,7 +87,6 @@ const routes = [
             component: () => import('@/views/package/Create.vue'),
             meta: { requiresAuth: true, title: 'Thêm gói tập' },
           },
-         
         ],
       },
       {
@@ -109,9 +108,8 @@ const routes = [
               },
             ],
           },
-
         ],
-      }
+      },
     ],
   },
   {

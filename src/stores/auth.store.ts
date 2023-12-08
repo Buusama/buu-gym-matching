@@ -20,7 +20,7 @@ export const useAuthStore = defineStore({
       localStorage.setItem('token', response.access_token)
       localStorage.setItem('user', JSON.stringify(response.user))
 
-      router.push({ name: 'home' })
+      router.push({ name: 'dashboard' })
     },
     logout() {
       this.token = null

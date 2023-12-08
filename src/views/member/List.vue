@@ -6,21 +6,6 @@
       <router-link :to="{ name: 'create-member' }" tag="a" class="btn btn-primary shadow-md mr-2">
         Thêm mới hội viên
       </router-link>
-      <!-- <Dropdown class="ml-auto sm:ml-0">
-        <DropdownToggle class="btn px-2 box">
-          <span class="w-5 h-5 flex items-center justify-center">
-            <PlusIcon class="w-4 h-4" />
-          </span>
-        </DropdownToggle>
-        <DropdownMenu class="w-40">
-          <DropdownContent>
-            <DropdownItem>
-              <FilePlusIcon class="w-4 h-4 mr-2" /> New Category
-            </DropdownItem>
-            <DropdownItem> <UserPlusIcon class="w-4 h-4 mr-2" /> New Group </DropdownItem>
-          </DropdownContent>
-        </DropdownMenu>
-      </Dropdown> -->
     </div>
   </div>
   <!-- BEGIN: HTML Table Data -->
@@ -28,16 +13,16 @@
     <div class="flex flex-col sm:flex-row sm:items-end xl:items-start">
       <form id="tabulator-html-filter-form" class="xl:flex sm:mr-auto">
         <div class="sm:flex items-center sm:mr-4">
-          <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2">Field</label>
+          <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2">Trường</label>
           <select id="tabulator-html-filter-field" v-model="filter.field"
             class="form-select w-full sm:w-32 2xl:w-full mt-2 sm:mt-0 sm:w-auto">
-            <option value="name">Name</option>
-            <option value="category">Category</option>
-            <option value="remaining_stock">Remaining Stock</option>
+            <option value="name">Tên hội viên</option>
+            <option value="phone">Số điện thoại</option>
+            <option value="address">Địa chỉ</option>
           </select>
         </div>
         <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
-          <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2">Type</label>
+          <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2">So sánh</label>
           <select id="tabulator-html-filter-type" v-model="filter.type" class="form-select w-full mt-2 sm:mt-0 sm:w-auto">
             <option value="like" selected>like</option>
             <option value="=">=</option>
@@ -50,12 +35,24 @@
         </div>
         <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
           <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2">Value</label>
-          <input id="tabulator-html-filter-value" v-model="filter.value" type="text"
-            class="form-control sm:w-40 2xl:w-full mt-2 sm:mt-0" placeholder="Search..." />
+          <input id="tabulator-html-filter-value" v-model="filter.value[0]" type="text"
+            class="form-control sm:w-40 2xl:w-full mt-2 sm:mt-0" placeholder="Giá trị..." />
+        </div>
+        <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
+          <label class="w-12 flex-none xl:w-auto xl:flex-initial mr-2">Trạng thái</label>
+          <select id="tabulator-html-filter-type" v-model="filter.value[1]"
+            class="form-select w-full mt-2 sm:mt-0 sm:w-auto">
+            <option value="0">Tất cả</option>
+            <option value="1">Đang hoạt động</option>
+            <option value="2">Bị Khóa</option>
+            <option value="3">Ngưng hoạt động</option>
+            <option value="4">Đóng băng</option>
+            <option value="5">Chưa thanh toán</option>
+          </select>
         </div>
         <div class="mt-2 xl:mt-0">
           <button id="tabulator-html-filter-go" type="button" class="btn btn-primary w-full sm:w-16" @click="onFilter">
-            Go
+            Lọc
           </button>
           <button id="tabulator-html-filter-reset" type="button"
             class="btn btn-secondary w-full sm:w-16 mt-2 sm:mt-0 sm:ml-1" @click="onResetFilter">
@@ -127,8 +124,8 @@ import dom from '@left4code/tw-starter/dist/js/dom'
 import { upperCaseValue } from '@/common/utils/helpers'
 import { getMembers, deleteMember } from '@/api/members'
 import MemberEdit from '@/views/member/Edit.vue'
-
 import router from '@/router'
+
 const tableRef = ref()
 const tabulator = ref()
 const isModalVisible = ref(false)
@@ -136,7 +133,7 @@ const deleteMemberId = ref(null)
 const filter = reactive({
   field: 'name',
   type: 'like',
-  value: '',
+  value: ['', 0],
 })
 const tableData = reactive({
   totalRecordCount: 0,
@@ -155,12 +152,17 @@ const RequestFunc = async (url, config, params) => {
   const limit = params.size
   const order = params.sorters[0] ? params.sorters[0].field : 'updated_at'
   const sort = params.sorters[0] ? params.sorters[0].dir : 'desc'
-
+  const filter = params.filters[0] ? params.filters[0] : null
+  
   await getMembers({
     skip: offset,
     take: limit,
     sort_by: order,
     sort_enum: upperCaseValue(sort),
+    field: filter ? filter.field : null,
+    type: filter ? filter.type : null,
+    value: filter ? filter.value[0] : null,
+    status: filter && filter.value[1] != 0 ? filter.value[1] : null,
   }).then((response) => {
     last_page = response.meta.pageCount
     data = response.data
@@ -216,7 +218,7 @@ const initTabulator = () => {
             </div>
             <div class="intro-x ml-5">
               <div class="font-medium whitespace-nowrap">${cell.getData().name}</div>
-              <div class="text-slate-500 text-xs whitespace-nowrap">${cell.getData().birth_date
+              <div class="text-slate-500 text-xs whitespace-nowrap">${cell.getData().email
             }</div>
             </div>
           </div>`
@@ -224,7 +226,7 @@ const initTabulator = () => {
       },
       {
         title: 'SỐ ĐIỆN THOẠI',
-        minWidth: 180,
+        minWidth: 100,
         field: 'phone',
         hozAlign: 'center',
         vertAlign: 'middle',
@@ -237,9 +239,23 @@ const initTabulator = () => {
         },
       },
       {
+        title: 'NGÀY SINH',
+        minWidth: 100,
+        field: 'birth_date',
+        hozAlign: 'center',
+        vertAlign: 'middle',
+        print: false,
+        download: false,
+        formatter(cell) {
+          return `<div>
+                  <div class="font-medium whitespace-nowrap">${cell.getData().birth_date}</div>
+              </div>`
+        },
+      },
+      {
         title: 'GIỚI TÍNH',
         field: 'gender',
-        minWidth: 100,
+        minWidth: 50,
         hozAlign: 'center',
         vertAlign: 'middle',
         print: false,
@@ -270,15 +286,20 @@ const initTabulator = () => {
         title: 'STATUS',
         minWidth: 200,
         field: 'status',
-        hozAlign: 'center',
+        hozAlign: 'left',
         vertAlign: 'middle',
         print: false,
         download: false,
         headerSort: false,
         formatter(cell) {
-          return `<div class="flex items-center lg:justify-center ${cell.getData().status ? 'text-success' : 'text-danger'
+          return `<div class="flex items-center lg:justify-center ${cell.getData().status == 1 ? 'text-success' : 'text-danger'
             }">
-                <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> ${cell.getData().status ? 'Active' : 'Inactive'
+                <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> 
+                ${cell.getData().status == 1 ? 'Đang hoạt động'
+              : cell.getData().status == 2 ? 'Bị Khóa'
+                : cell.getData().status == 3 ? 'Ngưng hoạt động'
+                  : cell.getData().status == 4 ? 'Đóng băng'
+                    : 'Chưa thanh toán'
             }
               </div>`
         },
@@ -398,6 +419,8 @@ const reInitOnResizeWindow = () => {
 
 // Filter function
 const onFilter = () => {
+  //add status to filter value array
+  console.log(filter)
   tabulator.value.setFilter(filter.field, filter.type, filter.value)
 }
 
@@ -405,7 +428,7 @@ const onFilter = () => {
 const onResetFilter = () => {
   filter.field = 'name'
   filter.type = 'like'
-  filter.value = ''
+  filter.value = ['', 0]
   onFilter()
 }
 

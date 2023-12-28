@@ -10,6 +10,23 @@ export const useSideMenuStore = defineStore('sideMenu', {
       },
       'devider',
       {
+        icon: 'PackageIcon',
+        title: 'Dịch vụ',
+        subMenu: [
+          {
+            icon: '',
+            pageName: 'create-package',
+            title: 'Thêm dịch vụ',
+          },
+          {
+            icon: '',
+            pageName: 'list-packages',
+            title: 'Danh sách dịch vụ',
+            path: '/packages',
+          },
+        ],
+      },
+      {
         icon: 'UserIcon',
         title: 'Hội Viên',
         subMenu: [
@@ -31,18 +48,7 @@ export const useSideMenuStore = defineStore('sideMenu', {
           },
         ],
       },
-      {
-        icon: 'PackageIcon',
-        title: 'Gói tập',
-        subMenu: [
-          {
-            icon: '',
-            pageName: 'list-packages',
-            title: 'Danh sách gói tập',
-            path: '/packages',
-          },
-        ],
-      },
+      'devider',
       {
         icon: 'UsersIcon',
         title: 'Quản trị viên',

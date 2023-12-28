@@ -1,15 +1,15 @@
 <template>
   <div class="intro-y flex items-center mt-8">
-    <h2 class="text-lg font-medium mr-auto">Chỉnh sửa thông tin hội viên</h2>
+    <h2 class="text-lg font-medium mr-auto">Chỉnh sửa thông tin dịch vụ</h2>
   </div>
   <div class="grid">
     <div class="col-span-12 lg:col-span-8 2xl:col-span-9">
-      <!-- BEGIN: Thông tin hội viên -->
+      <!-- BEGIN: Thông tin dịch vụ -->
       <div class="intro-y box lg:mt-5">
         <div
           class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400"
         >
-          <h2 class="font-medium text-base mr-auto">Thông tin hội viên</h2>
+          <h2 class="font-medium text-base mr-auto">Thông tin dịch vụ</h2>
         </div>
         <div class="p-5">
           <div class="flex flex-col-reverse xl:flex-row flex-col">
@@ -18,13 +18,13 @@
                 <div class="col-span-12 2xl:col-span-6">
                   <div>
                     <label for="create-member-form-1" class="form-label"
-                      >Tên hội viên</label
+                      >Tên dịch vụ</label
                     >
                     <input
                       v-model="name"
                       type="text"
                       class="form-control"
-                      placeholder="Tên hội viên"
+                      placeholder="Tên dịch vụ"
                     />
                   </div>
                   <div class="mt-3">
@@ -154,7 +154,7 @@
           </div>
         </div>
       </div>
-      <!-- END: Thông tin hội viên -->
+      <!-- END: Thông tin dịch vụ -->
     </div>
   </div>
 </template>
@@ -242,7 +242,7 @@ const updateMemberFunc = async () => {
 
   const res = await editMember(paramId, formData)
   if (res) {
-    showMessage('Chỉnh sửa thông tin hội viên thành công', true)
+    showMessage('Chỉnh sửa thông tin dịch vụ thành công', true)
     router.push({ name: 'list-members' })
   }
 }

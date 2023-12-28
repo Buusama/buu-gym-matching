@@ -13,4 +13,11 @@ export default {
     update: (id: string) => `/members/${id}`,
     delete: (id: string) => `/members/${id}`,
   },
+  packages: {
+    list: '/packages',
+    create: '/packages',
+    detail: (id: string) => `/packages/${id}`,
+    update: (id: string) => `/packages/${id}`,
+    delete: (id: string) => `/packages/${id}`,
+  },
 }

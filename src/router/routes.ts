@@ -67,25 +67,30 @@ const routes = [
       {
         path: '/packages',
         name: 'packages',
-        meta: { requiresAuth: true, title: 'Gói tập' },
+        meta: { requiresAuth: true, title: 'Dịch vụ' },
         children: [
           {
             path: '',
             name: 'list-packages',
             component: () => import('@/views/package/List.vue'),
-            meta: { requiresAuth: true, title: 'Danh sách gói tập' },
+            meta: { requiresAuth: true, title: 'Danh sách dịch vụ' },
           },
           {
             path: ':id/edit',
             name: 'edit-package',
             component: () => import('@/views/package/Edit.vue'),
-            meta: { requiresAuth: true, title: 'Chỉnh sửa gói tập' },
+            meta: { requiresAuth: true, title: 'Chỉnh sửa dịch vụ' },
           },
           {
             path: 'create',
-            name: 'create-package',
-            component: () => import('@/views/package/Create.vue'),
-            meta: { requiresAuth: true, title: 'Thêm gói tập' },
+            children: [
+              {
+                path: '',
+                name: 'create-package',
+                component: () => import('@/views/package/Create.vue'),
+                meta: { requiresAuth: true, title: 'Thêm dịch vụ' },
+              },
+            ],
           },
         ],
       },

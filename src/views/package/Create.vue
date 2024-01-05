@@ -16,7 +16,7 @@
                 <div class="col-span-12 2xl:col-span-6">
                   <div>
                     <label for="create-member-form-1" class="form-label">Tên dịch vụ</label>
-                    <input v-model="name" type="text" class="form-control" placeholder="Tên dịch vụ" />
+                    <input v-model="namePackage" type="text" class="form-control" placeholder="Tên dịch vụ" />
                   </div>
                   <div class="mt-3">
                     <label for="create-member-form-2" class="form-label">Loại dịch vụ</label>
@@ -147,8 +147,11 @@
 import { createPackage } from '@/api/packages';
 import { CreatePackageRequest } from '@/api/packages/interfaces';
 import { ref } from 'vue';
+import { showMessage } from "@/common/utils/helpers";
+import router from "@/router";
 
-const name = ref('');
+
+const namePackage = ref('');
 const type = ref(0);
 const freeServices = ref([]);
 const price = ref(0);
@@ -163,20 +166,25 @@ const discount = ref(false);
 
 const createPackageFunc = async () => {
   const data = {
-    name: name.value,
+    name: namePackage.value,
     price: price.value,
     type: type.value,
     usage_type: useType.value,
     usage_limit: usageLimit.value,
-    free_service: freeServices.value.toString(),
-    status: status.value,
+    free_service: freeServices.value,
+    status: Number(status.value),
     note: note.value,
-    commission_for_sellers: sellerCommission.value,
-    referral_commission: referralCommission.value,
-    employee_referral_commission: staffCommission.value,
+    commission_for_sellers: Number(sellerCommission.value),
+    referral_commission: Number(referralCommission.value),
+    employee_referral_commission: Number(staffCommission.value),
     commission_status: Number(discount.value),
   } as CreatePackageRequest;
-  await createPackage(data);
+  const res = await createPackage(data);
+  if (res) {
+    showMessage('Thêm mới dịch vụ thành công', true);
+    router.push({ name: 'list-packages' });
+  }
+
 };
 
 

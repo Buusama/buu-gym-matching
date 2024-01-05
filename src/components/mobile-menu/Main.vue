@@ -116,7 +116,6 @@ onMounted(() => {
   if (scrollableElement) {
     new SimpleBar(scrollableElement)
   } else {
-    console.error('Scrollable element not found.')
   }
   formattedMenu.value = $h.toRaw(mobileMenu.value)
 })

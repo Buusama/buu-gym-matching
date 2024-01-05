@@ -1,26 +1,11 @@
 <template>
     <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
-        <h2 class="text-lg font-medium mr-auto">Danh sách hội viên</h2>
+        <h2 class="text-lg font-medium mr-auto">Danh sách gói dịch vụ</h2>
 
         <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
             <router-link :to="{ name: 'create-package' }" tag="a" class="btn btn-primary shadow-md mr-2">
-                Thêm mới hội viên
+                Thêm mới gói dịch vụ
             </router-link>
-            <!-- <Dropdown class="ml-auto sm:ml-0">
-          <DropdownToggle class="btn px-2 box">
-            <span class="w-5 h-5 flex items-center justify-center">
-              <PlusIcon class="w-4 h-4" />
-            </span>
-          </DropdownToggle>
-          <DropdownMenu class="w-40">
-            <DropdownContent>
-              <DropdownItem>
-                <FilePlusIcon class="w-4 h-4 mr-2" /> New Category
-              </DropdownItem>
-              <DropdownItem> <UserPlusIcon class="w-4 h-4 mr-2" /> New Group </DropdownItem>
-            </DropdownContent>
-          </DropdownMenu>
-        </Dropdown> -->
         </div>
     </div>
     <!-- BEGIN: HTML Table Data -->
@@ -32,8 +17,6 @@
                     <select id="tabulator-html-filter-field" v-model="filter.field"
                         class="form-select w-full sm:w-32 2xl:w-full mt-2 sm:mt-0 sm:w-auto">
                         <option value="name">Name</option>
-                        <option value="category">Category</option>
-                        <option value="remaining_stock">Remaining Stock</option>
                     </select>
                 </div>
                 <div class="sm:flex items-center sm:mr-4 mt-2 xl:mt-0">
@@ -104,14 +87,14 @@
                     <XCircleIcon class="w-16 h-16 text-theme-6 mx-auto mt-3" />
                     <div class="text-3xl mt-5">Are you sure?</div>
                     <div class="text-gray-600 mt-2">
-                        Bạn có chắc muốn xóa hội viên này không? <br />Thay tác này sẽ không thể hoàn tác
+                        Bạn có chắc muốn xóa gói dịch vụ này không? <br />Thay tác này sẽ không thể hoàn tác
                     </div>
                 </div>
                 <div class="px-5 pb-8 text-center">
                     <button type="button" class="btn btn-outline-secondary w-24 mr-1" @click="hideDeleteConfirmationModal">
                         Hủy
                     </button>
-                    <button type="button" class="btn btn-danger w-24" @click="deleteMemberById">Xóa</button>
+                    <button type="button" class="btn btn-danger w-24" @click="deletePackageById">Xóa</button>
                 </div>
             </ModalBody>
         </Modal>
@@ -127,14 +110,14 @@ import { createIcons, icons } from 'lucide'
 import Tabulator from 'tabulator-tables'
 import dom from '@left4code/tw-starter/dist/js/dom'
 import { upperCaseValue } from '@/common/utils/helpers'
-import { getMembers, deleteMember } from '@/api/members'
-import MemberEdit from '@/views/member/Edit.vue'
+import { getPackages, deletePackage } from '@/api/packages'
+import PackageEdit from '@/views/package/Edit.vue'
 
 import router from '@/router'
 const tableRef = ref()
 const tabulator = ref()
 const isModalVisible = ref(false)
-const deleteMemberId = ref(null)
+const deletePackageId = ref(null)
 const filter = reactive({
     field: 'name',
     type: 'like',
@@ -158,7 +141,7 @@ const RequestFunc = async (url, config, params) => {
     const order = params.sorters[0] ? params.sorters[0].field : 'updated_at'
     const sort = params.sorters[0] ? params.sorters[0].dir : 'desc'
 
-    await getMembers({
+    await getPackages({
         skip: offset,
         take: limit,
         sort_by: order,
@@ -202,7 +185,7 @@ const initTabulator = () => {
 
             // For HTML table
             {
-                title: 'TÊN HỘI VIÊN',
+                title: 'TÊN GÓI DỊCH VỤ',
                 minWidth: 180,
                 responsive: 0,
                 field: 'name',
@@ -212,20 +195,14 @@ const initTabulator = () => {
                 formatter(cell) {
                     return `
             <div class="flex items-center lg:justify-center">
-              <div class="intro-x w-10 h-10 image-fit">
-                <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="${cell.getData().avatar
-                        }">
-              </div>
-              <div class="intro-x ml-5">
+              <div class="intro-x">
                 <div class="font-medium whitespace-nowrap">${cell.getData().name}</div>
-                <div class="text-slate-500 text-xs whitespace-nowrap">${cell.getData().birth_date
-                        }</div>
               </div>
             </div>`
                 },
             },
             {
-                title: 'SỐ ĐIỆN THOẠI',
+                title: 'GIÁ DỊCH VỤ',
                 minWidth: 180,
                 field: 'phone',
                 hozAlign: 'center',
@@ -234,12 +211,12 @@ const initTabulator = () => {
                 download: false,
                 formatter(cell) {
                     return `<div>
-                    <div class="font-medium whitespace-nowrap">${cell.getData().phone}</div>
+                    <div class="font-medium whitespace-nowrap">${cell.getData().price}</div>
                 </div>`
                 },
             },
             {
-                title: 'GIỚI TÍNH',
+                title: 'DỊCH VỤ MIỄN PHÍ',
                 field: 'gender',
                 minWidth: 100,
                 hozAlign: 'center',
@@ -247,14 +224,17 @@ const initTabulator = () => {
                 print: false,
                 download: false,
                 formatter(cell) {
-                    return `<div class="flex items-center lg:justify-center ${cell.getData().gender == 1 ? 'text-success' : cell.getData().gender == 2 ? 'text-danger' : 'text-info'
-                        }">
-                  ${cell.getData().gender == 1 ? 'Nam' : cell.getData().gender == 2 ? 'Nu' : 'Khac'}
+                    return `<div class="flex items-center lg:justify-center text-info">
+                  ${cell.getData().free_service.map((item) => {
+                        return `<div class="intro-x ml-5">
+                        <div class="font-medium whitespace-nowrap">${item == 1 ? 'Khăn' : item == 2 ? 'Nước' : 'Vé Xe'}</div>
+                    </div>`
+                    })}
                 </div>`
                 },
             },
             {
-                title: 'ĐỊA CHỈ',
+                title: 'GHI CHÚ',
                 minWidth: 150,
                 field: 'address',
                 hozAlign: 'center',
@@ -263,9 +243,9 @@ const initTabulator = () => {
                 download: false,
                 formatter(cell) {
                     return `<div>
-                    <div class="font-medium whitespace-nowrap">${cell.getData().address
+                        <div class="font-medium whitespace-nowrap">${cell.getData().note
                         }</div>
-                </div>`
+                </div > `
                 },
             },
             {
@@ -280,9 +260,9 @@ const initTabulator = () => {
                 formatter(cell) {
                     return `<div class="flex items-center lg:justify-center ${cell.getData().status ? 'text-success' : 'text-danger'
                         }">
-                  <i data-lucide="check-square" class="w-4 h-4 mr-2"></i> ${cell.getData().status ? 'Active' : 'Inactive'
+    <i data-lucide="check-square" class="w-4 h-4 mr-2" ></i > ${cell.getData().status ? 'Active' : 'Inactive'
                         }
-                </div>`
+                </div > `
                 },
             },
             {
@@ -297,9 +277,9 @@ const initTabulator = () => {
                 headerSort: false,
                 formatter(cell) {
                     const editButton = dom(`
-              <a class="flex items-center mr-3 text-primary" href="javascript:;">
-                  <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> Chỉnh sửa
-              </a>`);
+    <a class="flex items-center mr-3 text-primary" href = "javascript:;" >
+        <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> Chỉnh sửa
+              </a > `);
 
                     dom(editButton).on('click', function () {
                         const packageId = cell.getData().id;
@@ -312,10 +292,10 @@ const initTabulator = () => {
                     });
 
                     const deleteButton = dom(`
-              <a class="flex items-center mr-3 text-danger" href="javascript:;" data-toggle="modal"
-                      data-target="#delete-confirmation-modal">
-                  <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i>Xóa
-              </a>`);
+    <a class="flex items-center mr-3 text-danger" href = "javascript:;" data - toggle="modal"
+data-target="#delete-confirmation-modal" >
+    <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i>Xóa
+              </a > `);
 
                     dom(deleteButton).on('click', function () {
                         showDeleteConfirmationModal(cell.getData().id);
@@ -372,17 +352,17 @@ const initTabulator = () => {
 }
 
 const showDeleteConfirmationModal = (id) => {
-    deleteMemberId.value = id;
+    deletePackageId.value = id;
     isModalVisible.value = true
 }
 
 const hideDeleteConfirmationModal = () => {
-    deleteMemberId.value = null
+    deletePackageId.value = null
     isModalVisible.value = false
 }
 
-const deleteMemberById = async () => {
-    await deleteMember(deleteMemberId.value)
+const deletePackageById = async () => {
+    await deletePackage(deletePackageId.value)
     hideDeleteConfirmationModal()
     tabulator.value.replaceData()
 }

@@ -1,15 +1,89 @@
 <template>
   <div class="intro-y flex items-center mt-8">
-    <h2 class="text-lg font-medium mr-auto">Chỉnh sửa thông tin dịch vụ</h2>
+    <h2 class="text-lg font-medium mr-auto">Thêm mới dịch vụ</h2>
   </div>
   <div class="grid">
     <div class="col-span-12 lg:col-span-8 2xl:col-span-9">
       <!-- BEGIN: Thông tin dịch vụ -->
       <div class="intro-y box lg:mt-5">
-        <div
-          class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400"
-        >
+        <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
           <h2 class="font-medium text-base mr-auto">Thông tin dịch vụ</h2>
+        </div>
+        <div class="p-5 border-b border-slate-200/60 dark:border-darkmode-400">
+          <div class="flex flex-col-reverse xl:flex-row flex-col">
+            <div class="flex-1 mt-6 xl:mt-0">
+              <div class="grid grid-cols-12 gap-x-5">
+                <div class="col-span-12 2xl:col-span-6">
+                  <div>
+                    <label for="create-member-form-1" class="form-label">Tên dịch vụ</label>
+                    <input v-model="namePackage" type="text" class="form-control" placeholder="Tên dịch vụ" />
+                  </div>
+                  <div class="mt-3">
+                    <label for="create-member-form-2" class="form-label">Loại dịch vụ</label>
+                    <select v-model="type" class="form-select">
+                      <option value="1">Gói Dịch vụ Massage Trị liệu</option>
+                      <option value="2">Gói Workout Plan</option>
+                    </select>
+                  </div>
+                  <div class="mt-3">
+                    <label for="create-member-form-2" class="form-label">Dịch vụ miễn phí</label>
+                    <div class="flex flex-col sm:flex-row ">
+                      <div class="form-check mr-2">
+                        <input v-model="freeServices" id="checkbox-switch-4" class="form-check-input" type="checkbox"
+                          value="1" />
+                        <label class="form-check-label" for="checkbox-switch-4">Khăn</label>
+                      </div>
+                      <div class="form-check mr-2 sm:mt-0">
+                        <input v-model="freeServices" id="checkbox-switch-5" class="form-check-input" type="checkbox"
+                          value="2" />
+                        <label class="form-check-label" for="checkbox-switch-5">Nước</label>
+                      </div>
+                      <div class="form-check mr-2 sm:mt-0">
+                        <input v-model="freeServices" id="checkbox-switch-6" class="form-check-input" type="checkbox"
+                          value="3" />
+                        <label class="form-check-label" for="checkbox-switch-6">Vé xe</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-span-12 2xl:col-span-6">
+                  <div class="mt-3 2xl:mt-0">
+                    <label for="create-member-form-4" class="form-label">Giá dịch vụ (VND)</label>
+                    <input v-model="price" type="number" step="50000" class="form-control" placeholder="Giá dịch vụ" />
+                  </div>
+                  <div class="mt-3">
+                    <label for="create-member-form-2" class="form-label">Kiểu sử dụng</label>
+                    <div class="grid grid-cols-3 gap-4 sm:flex-row">
+                      <select v-model="useType" class="form-select mr-5 col-span-2">
+                        <option value="1">Theo ngày</option>
+                        <option value="2">Theo lần quẹt</option>
+                        <option value="3">Theo tháng</option>
+                      </select>
+                      <input v-model="usageLimit" type="text" class="form-control" placeholder="Số lượng" />
+                    </div>
+                  </div>
+                  <div class="mt-3">
+                    <label for="create-member-form-2" class="form-label">Trạng thái</label>
+                    <div class="form-check">
+                      <input v-model="status" id="checkbox-switch-7" class="form-check-switch form-check-input"
+                        type="checkbox" />
+                      <label class="form-check-label" for="checkbox-switch-7">Hoạt động</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-span-12">
+                  <div class="mt-3">
+                    <label for="create-member-form-7" class="form-label">Ghi chú</label>
+                    <textarea v-model="note" rows="5" class="form-control" placeholder="Ghi chú"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex items-center p-5 border-b border-slate-200/60 dark:border-darkmode-400">
+          <h2 class="font-medium text-base mr-auto">Thông tin hoa hồng</h2>
         </div>
         <div class="p-5">
           <div class="flex flex-col-reverse xl:flex-row flex-col">
@@ -17,141 +91,51 @@
               <div class="grid grid-cols-12 gap-x-5">
                 <div class="col-span-12 2xl:col-span-6">
                   <div>
-                    <label for="create-member-form-1" class="form-label"
-                      >Tên dịch vụ</label
-                    >
-                    <input
-                      v-model="name"
-                      type="text"
-                      class="form-control"
-                      placeholder="Tên dịch vụ"
-                    />
+                    <label for="create-member-form-1" class="form-label">Hoa hồng người bán</label>
+                    <div class="input-group">
+                      <div class="input-group-text">%</div>
+                      <input v-model="sellerCommission" type="text" class="form-control" />
+                      <div class="input-group-text">.00</div>
+                    </div>
                   </div>
                   <div class="mt-3">
-                    <label for="create-member-form-2" class="form-label">Giới tính</label>
-                    <select v-model="gender" class="form-select">
-                      <option value="1">Nam</option>
-                      <option value="2">Nữ</option>
-                      <option value="3">Khác</option>
-                    </select>
-                  </div>
-                  <div class="mt-3">
-                    <label for="create-member-form-3" class="form-label">Ngày sinh</label>
-                    <div class="relative form-control">
-                      <div
-                        class="absolute rounded-l w-10 h-full flex items-center justify-center bg-slate-100 border text-slate-500 dark:bg-darkmode-700 dark:border-darkmode-800 dark:text-slate-400"
-                      >
-                        <CalendarIcon class="w-4 h-4" />
-                      </div>
-                      <Litepicker
-                        v-model="date"
-                        :options="{
-                          autoApply: false,
-                          showWeekNumbers: true,
-                          dropdowns: {
-                            minYear: 1990,
-                            maxYear: null,
-                            months: true,
-                            years: true,
-                          },
-                          format: 'YYYY-MM-DD',
-                        }"
-                        class="form-control pl-12"
-                      />
+                    <label for="create-member-form-2" class="form-label">Hoa hồng khách giới thiệu</label>
+                    <div class="input-group">
+                      <div class="input-group-text">%</div>
+                      <input v-model="referralCommission" type="text" class="form-control" />
+                      <div class="input-group-text">.00</div>
                     </div>
                   </div>
                 </div>
                 <div class="col-span-12 2xl:col-span-6">
                   <div class="mt-3 2xl:mt-0">
-                    <label for="create-member-form-4" class="form-label"
-                      >Số điện thoại</label
-                    >
-                    <input
-                      v-model="phone"
-                      type="text"
-                      class="form-control"
-                      placeholder="Số điện thoại"
-                    />
+                    <label for="create-member-form-4" class="form-label">Hoa hồng nhân viên giới thiệu</label>
+                    <div class="input-group">
+                      <div class="input-group-text">%</div>
+                      <input v-model="staffCommission" type="text" class="form-control" />
+                      <div class="input-group-text">.00</div>
+                    </div>
                   </div>
                   <div class="mt-3">
-                    <label for="create-member-form-5" class="form-label">Email</label>
-                    <input
-                      v-model="email"
-                      type="text"
-                      class="form-control"
-                      placeholder="Email"
-                    />
+                    <label for="create-member-form-2" class="form-label">Chiếu khấu hoa hồng</label>
+                    <div class="form-check mt-2 ">
+                      <input v-model="discount" id="checkbox-switch-8" class="form-check-switch form-check-input"
+                        type="checkbox" />
+                      <label class="form-check-label" for="checkbox-switch-8">Cho phép chiết khấu</label>
+                    </div>
                   </div>
-                  <div class="mt-3">
-                    <label for="create-member-form-6" class="form-label"
-                      >Trạng thái hoạt động</label
-                    >
-                    <select v-model="status" class="form-select">
-                      <option value="1">Bình thường</option>
-                      <option value="3">Chưa thanh toán</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="col-span-12">
-                  <div class="mt-3">
-                    <label for="create-member-form-7" class="form-label">Địa chỉ</label>
-                    <textarea
-                      v-model="address"
-                      rows="8"
-                      class="form-control"
-                      placeholder="Địa chỉ"
-                    >
-                    </textarea>
-                  </div>
-                </div>
-              </div>
-              <button
-                type="button"
-                class="btn btn-primary w-20 mt-3"
-                @click="updateMemberFunc"
-              >
-                Lưu
-              </button>
-              <router-link :to="{ name: 'list-members' }" tag="a" class="btn btn-outline-secondary ml-3 w-20 mt-3">
-                Hủy
-              </router-link>
-            </div>
-            <div class="w-52 mx-auto xl:mr-0 xl:ml-6">
-              <label for="create-member-form-8" class="form-label">Avatar</label>
-
-              <div
-                class="border-2 border-dashed shadow-sm border-slate-200/60 dark:border-darkmode-400 rounded-md p-5"
-              >
-                <div class="h-40 relative image-fit mx-auto">
-                  <img
-                    v-if="newImage"
-                    class="rounded-md cursor-pointer zoom-in"
-                    alt=""
-                    :src="newImage"
-                  />
-                  <Tippy
-                    v-if="newImage"
-                    tag="div"
-                    content="Remove this profile photo?"
-                    class="cursor-pointer w-5 h-5 flex items-center justify-center absolute rounded-full text-white bg-danger right-0 top-0 -mr-2 -mt-2"
-                  >
-                    <xIcon class="w-4 h-4" @click="removePreview()" />
-                  </Tippy>
-                </div>
-                <div class="mx-auto cursor-pointer relative mt-5">
-                  <button type="button" class="btn btn-primary w-full">
-                    Chọn hình ảnh
-                  </button>
-                  <input
-                    id="form-avatar"
-                    type="file"
-                    class="w-full h-full top-0 left-0 absolute opacity-0"
-                    @change="previewFiles($event)"
-                  />
                 </div>
               </div>
             </div>
           </div>
+        </div>
+        <div class="p-5">
+          <button @click="createPackageFunc" type="button" class="btn btn-primary w-20 mt-3">
+            Lưu
+          </button>
+          <router-link :to="{ name: 'list-packages' }" tag="a" class="btn btn-outline-secondary ml-3 w-20 mt-3">
+            Hủy
+          </router-link>
         </div>
       </div>
       <!-- END: Thông tin dịch vụ -->
@@ -161,7 +145,7 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue'
-import { getDetailMember, editMember } from '@/api/members'
+import { getDetailPackage, editPackage } from '@/api/members'
 import { showMessage } from '@/common/utils/helpers'
 import router from '@/router'
 import { CreateMemberRequest } from '@/api/members/interfaces/create'
@@ -195,24 +179,7 @@ const getMemberData = async () => {
   newImage.value = res.data.avatar
   existingImage.value = res.data.avatar
 }
-const previewFiles = (event: any) => {
-  var input = event.target
-  if (input.files) {
-    var reader = new FileReader()
-    reader.onload = (e: any) => {
-      newImage.value = e.target.result
-    }
-    reader.readAsDataURL(input.files[0])
-    newImageFile.value = input.files[0]
-  }
-}
 
-const removePreview = () => {
-  newImage.value = ""
-  const input = document.getElementById('form-avatar') as HTMLInputElement
-  input.value = ''
-  newImageFile.value = null
-}
 const updateMemberFunc = async () => {
   const data = {
     name: name.value,

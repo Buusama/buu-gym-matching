@@ -420,7 +420,6 @@ const reInitOnResizeWindow = () => {
 // Filter function
 const onFilter = () => {
   //add status to filter value array
-  console.log(filter)
   tabulator.value.setFilter(filter.field, filter.type, filter.value)
 }
 

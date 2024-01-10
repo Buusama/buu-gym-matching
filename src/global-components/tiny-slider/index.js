@@ -11,7 +11,7 @@ const init = (el, props) => {
     speed: 500,
     ...props.options,
   })
-}
+};
 
 const reInit = (el) => {
   if (el.tns.version !== null) {

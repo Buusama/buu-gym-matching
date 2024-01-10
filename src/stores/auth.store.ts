@@ -16,7 +16,6 @@ export const useAuthStore = defineStore({
 
       this.token = response.access_token
       this.currentUser = JSON.stringify(response.user)
-
       localStorage.setItem('token', response.access_token)
       localStorage.setItem('user', JSON.stringify(response.user))
 

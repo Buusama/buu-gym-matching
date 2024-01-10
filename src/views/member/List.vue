@@ -1,9 +1,100 @@
 <template>
+  <!-- BEGIN: General Report -->
+  <div class="col-span-12 mt-8">
+    <div class="intro-y flex items-center h-10">
+      <h2 class="text-lg font-medium truncate mr-5">Tổng quan</h2>
+    </div>
+    <div class="grid grid-cols-12 gap-6 mt-5">
+      <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+        <div class="report-box zoom-in">
+          <div class="box p-5">
+            <div class="flex">
+              <ShoppingCartIcon class="report-box__icon text-theme-10" />
+              <div class="ml-auto">
+                <Tippy
+                  tag="div"
+                  class="report-box__indicator bg-theme-9 cursor-pointer"
+                  content="33% Higher than last month"
+                >
+                  33% <ChevronUpIcon class="w-4 h-4" />
+                </Tippy>
+              </div>
+            </div>
+            <div class="text-3xl font-bold leading-8 mt-6">4.710</div>
+            <div class="text-base text-gray-600 mt-1">Tổng số hội viên</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+        <div class="report-box zoom-in">
+          <div class="box p-5">
+            <div class="flex">
+              <CreditCardIcon class="report-box__icon text-theme-11" />
+              <div class="ml-auto">
+                <Tippy
+                  tag="div"
+                  class="report-box__indicator bg-theme-6 cursor-pointer"
+                  content="2% Lower than last month"
+                >
+                  2% <ChevronDownIcon class="w-4 h-4" />
+                </Tippy>
+              </div>
+            </div>
+            <div class="text-3xl font-bold leading-8 mt-6">3.721</div>
+            <div class="text-base text-gray-600 mt-1">Tham gia hôm nay</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+        <div class="report-box zoom-in">
+          <div class="box p-5">
+            <div class="flex">
+              <MonitorIcon class="report-box__icon text-theme-12" />
+              <div class="ml-auto">
+                <Tippy
+                  tag="div"
+                  class="report-box__indicator bg-theme-9 cursor-pointer"
+                  content="12% Higher than last month"
+                >
+                  12% <ChevronUpIcon class="w-4 h-4" />
+                </Tippy>
+              </div>
+            </div>
+            <div class="text-3xl font-bold leading-8 mt-6">2.149</div>
+            <div class="text-base text-gray-600 mt-1">Tỷ lệ hội viên mới</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-span-12 sm:col-span-6 xl:col-span-3 intro-y">
+        <div class="report-box zoom-in">
+          <div class="box p-5">
+            <div class="flex">
+              <UserIcon class="report-box__icon text-theme-9" />
+              <div class="ml-auto">
+                <Tippy
+                  tag="div"
+                  class="report-box__indicator bg-theme-9 cursor-pointer"
+                  content="22% Higher than last month"
+                >
+                  22% <ChevronUpIcon class="w-4 h-4" />
+                </Tippy>
+              </div>
+            </div>
+            <div class="text-3xl font-bold leading-8 mt-6">152.040</div>
+            <div class="text-base text-gray-600 mt-1">Khách vãng lai</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="intro-y flex flex-col sm:flex-row items-center mt-8">
     <h2 class="text-lg font-medium mr-auto">Danh sách hội viên</h2>
-
     <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
-      <router-link :to="{ name: 'create-member' }" tag="a" class="btn btn-primary shadow-md mr-2">
+      <router-link
+        :to="{ name: 'create-member' }"
+        tag="a"
+        class="btn btn-primary shadow-md mr-2"
+      >
         Thêm mới hội viên
       </router-link>
     </div>
@@ -54,14 +145,22 @@
           <button id="tabulator-html-filter-go" type="button" class="btn btn-primary w-full sm:w-16" @click="onFilter">
             Lọc
           </button>
-          <button id="tabulator-html-filter-reset" type="button"
-            class="btn btn-secondary w-full sm:w-16 mt-2 sm:mt-0 sm:ml-1" @click="onResetFilter">
+          <button
+            id="tabulator-html-filter-reset"
+            type="button"
+            class="btn btn-secondary w-full sm:w-16 mt-2 sm:mt-0 sm:ml-1"
+            @click="onResetFilter"
+          >
             Reset
           </button>
         </div>
       </form>
       <div class="flex mt-5 sm:mt-0">
-        <button id="tabulator-print" class="btn btn-outline-secondary w-1/2 sm:w-auto mr-2" @click="onPrint">
+        <button
+          id="tabulator-print"
+          class="btn btn-outline-secondary w-1/2 sm:w-auto mr-2"
+          @click="onPrint"
+        >
           <PrinterIcon class="w-4 h-4 mr-2" /> Print
         </button>
         <Dropdown class="w-1/2 sm:w-auto">
@@ -89,7 +188,11 @@
       </div>
     </div>
     <div class="overflow-x-auto scrollbar-hidden">
-      <div id="tabulator" ref="tableRef" class="mt-5 table-report table-report--tabulator"></div>
+      <div
+        id="tabulator"
+        ref="tableRef"
+        class="mt-5 table-report table-report--tabulator"
+      ></div>
     </div>
 
     <!-- Sử dụng Modal component -->
@@ -99,14 +202,21 @@
           <XCircleIcon class="w-16 h-16 text-theme-6 mx-auto mt-3" />
           <div class="text-3xl mt-5">Are you sure?</div>
           <div class="text-gray-600 mt-2">
-            Bạn có chắc muốn xóa hội viên này không? <br />Thay tác này sẽ không thể hoàn tác
+            Bạn có chắc muốn xóa hội viên này không? <br />Thay tác này sẽ không thể hoàn
+            tác
           </div>
         </div>
         <div class="px-5 pb-8 text-center">
-          <button type="button" class="btn btn-outline-secondary w-24 mr-1" @click="hideDeleteConfirmationModal">
+          <button
+            type="button"
+            class="btn btn-outline-secondary w-24 mr-1"
+            @click="hideDeleteConfirmationModal"
+          >
             Hủy
           </button>
-          <button type="button" class="btn btn-danger w-24" @click="deleteMemberById">Xóa</button>
+          <button type="button" class="btn btn-danger w-24" @click="deleteMemberById">
+            Xóa
+          </button>
         </div>
       </ModalBody>
     </Modal>
@@ -138,12 +248,12 @@ const filter = reactive({
 const tableData = reactive({
   totalRecordCount: 0,
   sortable: {
-    order: 'asc',
-    sort: 'name',
+    order: "asc",
+    sort: "name",
   },
   rows: [],
-})
-const imageAssets = import.meta.globEager(`/src/assets/images/*.{jpg,jpeg,png,svg}`)
+});
+const imageAssets = import.meta.globEager(`/src/assets/images/*.{jpg,jpeg,png,svg}`);
 
 const RequestFunc = async (url, config, params) => {
   let last_page = 0
@@ -164,64 +274,65 @@ const RequestFunc = async (url, config, params) => {
     value: filter ? filter.value[0] : null,
     status: filter && filter.value[1] != 0 ? filter.value[1] : null,
   }).then((response) => {
-    last_page = response.meta.pageCount
-    data = response.data
-  })
+    last_page = response.meta.pageCount;
+    data = response.data;
+  });
   return new Promise((resolve, reject) => {
     resolve({
       last_page,
       data,
-    })
-    reject(new Error('Error'))
-  })
-}
+    });
+    reject(new Error("Error"));
+  });
+};
 
 const initTabulator = () => {
   tabulator.value = new Tabulator(tableRef.value, {
-    ajaxURL: 'linhlinhsoma',
+    ajaxURL: "linhlinhsoma",
     ajaxFiltering: true,
     ajaxSorting: true,
     ajaxRequestFunc: RequestFunc,
     printAsHtml: true,
     printStyled: true,
-    pagination: 'remote',
+    pagination: "remote",
     paginationSize: 10,
     paginationSizeSelector: [10, 20, 30, 40],
-    layout: 'fitColumns',
-    responsiveLayout: 'collapse',
-    placeholder: 'No matching records found',
+    layout: "fitColumns",
+    responsiveLayout: "collapse",
+    placeholder: "No matching records found",
     columns: [
       {
-        formatter: 'responsiveCollapse',
+        formatter: "responsiveCollapse",
         width: 40,
         minWidth: 30,
-        hozAlign: 'center',
+        hozAlign: "center",
         resizable: false,
         headerSort: false,
       },
 
       // For HTML table
       {
-        title: 'TÊN HỘI VIÊN',
+        title: "TÊN HỘI VIÊN",
         minWidth: 180,
         responsive: 0,
-        field: 'name',
-        vertAlign: 'middle',
+        field: "name",
+        vertAlign: "middle",
         print: false,
         download: false,
         formatter(cell) {
           return `
           <div class="flex items-center lg:justify-center">
             <div class="intro-x w-10 h-10 image-fit">
-              <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="${cell.getData().avatar
-            }">
+              <img alt="Midone Tailwind HTML Admin Template" class="rounded-full" src="${
+                cell.getData().avatar
+              }">
             </div>
             <div class="intro-x ml-5">
               <div class="font-medium whitespace-nowrap">${cell.getData().name}</div>
               <div class="text-slate-500 text-xs whitespace-nowrap">${cell.getData().email
             }</div>
             </div>
-          </div>`
+          </div>`;
         },
       },
       {
@@ -235,7 +346,7 @@ const initTabulator = () => {
         formatter(cell) {
           return `<div>
                   <div class="font-medium whitespace-nowrap">${cell.getData().phone}</div>
-              </div>`
+              </div>`;
         },
       },
       {
@@ -261,29 +372,41 @@ const initTabulator = () => {
         print: false,
         download: false,
         formatter(cell) {
-          return `<div class="flex items-center lg:justify-center ${cell.getData().gender == 1 ? 'text-success' : cell.getData().gender == 2 ? 'text-danger' : 'text-info'
-            }">
-                ${cell.getData().gender == 1 ? 'Nam' : cell.getData().gender == 2 ? 'Nu' : 'Khac'}
-              </div>`
+          return `<div class="flex items-center lg:justify-center ${
+            cell.getData().gender == 1
+              ? "text-success"
+              : cell.getData().gender == 2
+              ? "text-danger"
+              : "text-info"
+          }">
+                ${
+                  cell.getData().gender == 1
+                    ? "Nam"
+                    : cell.getData().gender == 2
+                    ? "Nu"
+                    : "Khac"
+                }
+              </div>`;
         },
       },
       {
-        title: 'ĐỊA CHỈ',
+        title: "ĐỊA CHỈ",
         minWidth: 150,
-        field: 'address',
-        hozAlign: 'center',
-        vertAlign: 'middle',
+        field: "address",
+        hozAlign: "center",
+        vertAlign: "middle",
         print: false,
         download: false,
         formatter(cell) {
           return `<div>
-                  <div class="font-medium whitespace-nowrap">${cell.getData().address
-            }</div>
-              </div>`
+                  <div class="font-medium whitespace-nowrap">${
+                    cell.getData().address
+                  }</div>
+              </div>`;
         },
       },
       {
-        title: 'STATUS',
+        title: "STATUS",
         minWidth: 200,
         field: 'status',
         hozAlign: 'left',
@@ -305,12 +428,12 @@ const initTabulator = () => {
         },
       },
       {
-        title: 'ACTIONS',
+        title: "ACTIONS",
         minWidth: 100,
-        field: 'actions',
+        field: "actions",
         responsive: 1,
-        hozAlign: 'left',
-        vertAlign: 'middle',
+        hozAlign: "left",
+        vertAlign: "middle",
         print: false,
         download: false,
         headerSort: false,
@@ -320,10 +443,10 @@ const initTabulator = () => {
                 <i data-lucide="check-square" class="w-4 h-4 mr-1"></i> Chỉnh sửa
             </a>`);
 
-          dom(editButton).on('click', function () {
+          dom(editButton).on("click", function () {
             const memberId = cell.getData().id;
             router.push({
-              name: 'edit-member',
+              name: "edit-member",
               params: {
                 id: memberId,
               },
@@ -336,10 +459,12 @@ const initTabulator = () => {
                 <i data-lucide="trash-2" class="w-4 h-4 mr-1"></i>Xóa
             </a>`);
 
-          dom(deleteButton).on('click', function () {
+          dom(deleteButton).on("click", function () {
             showDeleteConfirmationModal(cell.getData().id);
           });
-          const container = dom('<div class="flex lg:justify-center items-center"></div>');
+          const container = dom(
+            '<div class="flex lg:justify-center items-center"></div>'
+          );
           container.append(editButton[0]);
           container.append(deleteButton[0]);
 
@@ -349,73 +474,73 @@ const initTabulator = () => {
 
       // For print format
       {
-        title: 'TÊN HỘI VIÊN',
-        field: 'name',
+        title: "TÊN HỘI VIÊN",
+        field: "name",
         visible: false,
         print: true,
         download: true,
       },
       {
-        title: 'SỐ ĐIỆN THOẠI',
-        field: 'phone',
+        title: "SỐ ĐIỆN THOẠI",
+        field: "phone",
         visible: false,
         print: true,
         download: true,
       },
       {
-        title: 'ĐỊA CHỈ',
-        field: 'address',
+        title: "ĐỊA CHỈ",
+        field: "address",
         visible: false,
         print: true,
         download: true,
       },
       {
-        title: 'STATUS',
-        field: 'status',
+        title: "STATUS",
+        field: "status",
         visible: false,
         print: true,
         download: true,
         formatterPrint(cell) {
-          return cell.getValue() ? 'Active' : 'Inactive'
+          return cell.getValue() ? "Active" : "Inactive";
         },
       },
     ],
     renderComplete() {
       createIcons({
         icons,
-        'stroke-width': 1.5,
-        nameAttr: 'data-lucide',
-      })
+        "stroke-width": 1.5,
+        nameAttr: "data-lucide",
+      });
     },
-  })
-}
+  });
+};
 
 const showDeleteConfirmationModal = (id) => {
   deleteMemberId.value = id;
-  isModalVisible.value = true
-}
+  isModalVisible.value = true;
+};
 
 const hideDeleteConfirmationModal = () => {
-  deleteMemberId.value = null
-  isModalVisible.value = false
-}
+  deleteMemberId.value = null;
+  isModalVisible.value = false;
+};
 
 const deleteMemberById = async () => {
-  await deleteMember(deleteMemberId.value)
-  hideDeleteConfirmationModal()
-  tabulator.value.replaceData()
-}
+  await deleteMember(deleteMemberId.value);
+  hideDeleteConfirmationModal();
+  tabulator.value.replaceData();
+};
 // Redraw table onresize
 const reInitOnResizeWindow = () => {
-  window.addEventListener('resize', () => {
-    tabulator.value.redraw()
+  window.addEventListener("resize", () => {
+    tabulator.value.redraw();
     createIcons({
       icons,
-      'stroke-width': 1.5,
-      nameAttr: 'data-lucide',
-    })
-  })
-}
+      "stroke-width": 1.5,
+      nameAttr: "data-lucide",
+    });
+  });
+};
 
 // Filter function
 const onFilter = () => {
@@ -433,34 +558,34 @@ const onResetFilter = () => {
 
 // Export
 const onExportCsv = () => {
-  tabulator.value.download('csv', 'data.csv')
-}
+  tabulator.value.download("csv", "data.csv");
+};
 
 const onExportJson = () => {
-  tabulator.value.download('json', 'data.json')
-}
+  tabulator.value.download("json", "data.json");
+};
 
 const onExportXlsx = () => {
-  const win = window
-  win.XLSX = xlsx
-  tabulator.value.download('xlsx', 'data.xlsx', {
-    sheetName: 'Products',
-  })
-}
+  const win = window;
+  win.XLSX = xlsx;
+  tabulator.value.download("xlsx", "data.xlsx", {
+    sheetName: "Products",
+  });
+};
 
 const onExportHtml = () => {
-  tabulator.value.download('html', 'data.html', {
+  tabulator.value.download("html", "data.html", {
     style: true,
-  })
-}
+  });
+};
 
 // Print
 const onPrint = () => {
-  tabulator.value.print()
-}
+  tabulator.value.print();
+};
 
 onMounted(() => {
-  initTabulator()
-  reInitOnResizeWindow()
-})
+  initTabulator();
+  reInitOnResizeWindow();
+});
 </script>

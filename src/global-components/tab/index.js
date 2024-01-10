@@ -60,7 +60,7 @@ const init = (el, { props, emit }) => {
         }
       })
   });
-};
+}
 
 // Tab wrapper
 const TabGroup = defineComponent({

@@ -9,5 +9,3 @@ export enum MemberGenderLabel {
   NU = 'Nữ',
   KHAC = 'Khác',
 }
-
-

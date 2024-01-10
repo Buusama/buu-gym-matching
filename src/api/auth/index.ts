@@ -12,4 +12,4 @@ export const postLogin = async (
   )
 
   return response.data
-}
+};

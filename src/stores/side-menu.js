@@ -10,19 +10,14 @@ export const useSideMenuStore = defineStore('sideMenu', {
       },
       'devider',
       {
-        icon: 'PackageIcon',
-        title: 'Dịch vụ',
+        icon: 'UsersIcon',
+        title: 'Huấn luyện viên',
         subMenu: [
           {
             icon: '',
-            pageName: 'create-package',
-            title: 'Thêm dịch vụ',
-          },
-          {
-            icon: '',
-            pageName: 'list-packages',
-            title: 'Danh sách dịch vụ',
-            path: '/packages',
+            pageName: 'list-trainers',
+            title: 'Danh sách huấn luyện viên',
+            path: '/trainers',
           },
         ],
       },
@@ -48,13 +43,49 @@ export const useSideMenuStore = defineStore('sideMenu', {
           },
         ],
       },
+      {
+        icon: 'PackageIcon',
+        title: 'Gói tập',
+        subMenu: [
+          {
+            icon: '',
+            pageName: 'create-package',
+            title: 'Thêm gói tập',
+          },
+          {
+            icon: '',
+            pageName: 'list-packages',
+            title: 'Danh sách gói tập',
+            path: '/packages',
+          },
+        ],
+      },
+      'devider',
+      {
+        icon: 'UsersIcon',
+        title: 'Thống kê, Báo cáo',
+        subMenu: [
+          {
+            icon: '',
+            pageName: 'list-users',
+            title: 'Thống kê doanh thu',
+            path: '/users',
+          },
+          {
+            icon: '',
+            pageName: 'list-users',
+            title: 'Báo cáo doanh thu',
+            path: '/users',
+          },
+        ],
+      },
       'devider',
       {
         icon: 'UsersIcon',
         title: 'Quản trị viên',
         pageName: 'list-users',
         path: '/users',
-      }
+      },
     ],
   }),
 })

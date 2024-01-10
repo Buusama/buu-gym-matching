@@ -25,14 +25,14 @@ export const getMembers = async (request: GetMembersRequest): Promise<any> => {
   )
 
   return response.data
-};
+}
 
 export const createMember = async (formData: FormData): Promise<any> => {
   const response: AxiosResponse<CommonResponse<CreateMemberResponse>> =
     await axios.post(endpoints.members.create, formData)
 
   return response.data
-};
+}
 
 export const getDetailMember = async (id: string): Promise<any> => {
   const response: AxiosResponse<CommonResponse<any>> = await axios.get(
@@ -40,7 +40,7 @@ export const getDetailMember = async (id: string): Promise<any> => {
   )
 
   return response.data
-};
+}
 
 export const editMember = async (
   id: string,
@@ -52,7 +52,7 @@ export const editMember = async (
   )
 
   return response.data
-};
+}
 
 export const deleteMember = async (id: string): Promise<any> => {
   const response: AxiosResponse<CommonResponse<any>> = await axios.delete(
@@ -60,4 +60,4 @@ export const deleteMember = async (id: string): Promise<any> => {
   )
 
   return response.data
-}
+};

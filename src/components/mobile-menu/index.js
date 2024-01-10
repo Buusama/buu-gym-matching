@@ -5,7 +5,7 @@ import dom from '@left4code/tw-starter/dist/js/dom'
 const activeMobileMenu = ref(false)
 const toggleMobileMenu = () => {
   activeMobileMenu.value = !activeMobileMenu.value
-}
+};
 
 // Setup mobile menu
 const linkTo = (menu, router) => {
@@ -21,10 +21,10 @@ const linkTo = (menu, router) => {
 
 const enter = (el, done) => {
   dom(el).slideDown(300)
-}
+};
 
 const leave = (el, done) => {
   dom(el).slideUp(300)
-}
+};
 
 export { activeMobileMenu, toggleMobileMenu, linkTo, enter, leave }

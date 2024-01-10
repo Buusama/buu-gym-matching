@@ -24,6 +24,36 @@ const routes = [
         meta: { requiresAuth: true, title: 'Dashboard' },
       },
       {
+        path: '/trainers',
+        name: 'trainers',
+        meta: { requiresAuth: true, title: 'Huấn luyện viên' },
+        children: [
+          {
+            path: '',
+            name: 'list-trainers',
+            component: Home,
+            meta: { requiresAuth: true, title: 'Danh sách huấn luyện viên' },
+          },
+          {
+            path: 'create',
+            children: [
+              {
+                path: '',
+                name: 'create-trainer',
+                component: Home,
+                meta: { requiresAuth: true, title: 'Thêm huấn luyện viên' },
+              },
+            ],
+          },
+          {
+            path: ':id/edit',
+            name: 'edit-trainer',
+            component: Home,
+            meta: { requiresAuth: true, title: 'Chỉnh sửa huấn luyện viên' },
+          },
+        ],
+      },
+      {
         path: '/members',
         name: 'members',
         meta: { requiresAuth: true, title: 'Hội viên' },

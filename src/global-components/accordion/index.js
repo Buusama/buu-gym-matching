@@ -40,7 +40,7 @@ const init = (el, { props, emit }) => {
         });
       }
     })
-}
+};
 
 // Accordion wrapper
 const AccordionGroup = defineComponent({

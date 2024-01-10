@@ -12,6 +12,6 @@ const initializeMap = async (mapRef, mapConfig) => {
     map: map,
     google: google,
   }
-}
+};
 
 export { initializeMap }

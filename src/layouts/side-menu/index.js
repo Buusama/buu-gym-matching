@@ -19,7 +19,7 @@ const findActiveMenu = (subMenu, route) => {
     }
   })
   return match
-};
+}
 
 const nestedMenu = (menu, route) => {
   menu.forEach((item, key) => {
@@ -46,7 +46,7 @@ const nestedMenu = (menu, route) => {
   })
 
   return menu
-};
+}
 
 const linkTo = (menu, router, event) => {
   if (menu.subMenu) {
@@ -61,10 +61,10 @@ const linkTo = (menu, router, event) => {
 
 const enter = (el, done) => {
   dom(el).slideDown(300)
-};
+}
 
 const leave = (el, done) => {
   dom(el).slideUp(300)
-};
+}
 
 export { nestedMenu, linkTo, enter, leave }

@@ -35,7 +35,7 @@ const init = (originalEl, clonedEl, props, emit, computedOptions) => {
       Array.isArray(selectedItems) ? [...selectedItems] : selectedItems,
     )
   });
-}
+};
 
 const getOptions = (options, tempOptions = []) => {
   options.each(function (optionKey, optionEl) {
@@ -47,7 +47,7 @@ const getOptions = (options, tempOptions = []) => {
   })
 
   return tempOptions
-};
+}
 
 const updateValue = (
   originalEl,

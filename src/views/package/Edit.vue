@@ -242,6 +242,7 @@ import { onMounted, ref } from "vue";
 import { getDetailPackage, editPackage } from "@/api/packages";
 import { showMessage } from "@/common/utils/helpers";
 import router from "@/router";
+import { CreatePackageRequest } from "@/api/packages/interfaces";
 const paramId = router.currentRoute.value.params.id.toString();
 
 const namePackage = ref("");
@@ -250,7 +251,7 @@ const freeServices = ref([]);
 const price = ref(0);
 const useType = ref(1);
 const usageLimit = ref(0);
-const status = ref(1);
+const status = ref(false);
 const note = ref("");
 const sellerCommission = ref(0);
 const referralCommission = ref(0);

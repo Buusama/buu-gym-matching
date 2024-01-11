@@ -2,11 +2,12 @@ import { AxiosResponse } from 'axios'
 import { SearchResponse } from '../response'
 import axios from '@/common/utils/axios'
 import endpoints from '../endpoints'
-import { GetMembersRequest } from './interfaces/list'
 import { CommonResponse } from '../response'
-import { CreateMemberResponse } from './interfaces/create'
+import { CreateTrainerResponse, GetTrainersRequest } from './interfaces'
 
-export const getMembers = async (request: GetMembersRequest): Promise<any> => {
+export const getTrainers = async (
+  request: GetTrainersRequest,
+): Promise<any> => {
   const params = new URLSearchParams()
   params.append('skip', request.skip.toString())
   params.append('take', request.take.toString())
@@ -20,43 +21,43 @@ export const getMembers = async (request: GetMembersRequest): Promise<any> => {
   }
 
   const response: AxiosResponse<SearchResponse<any>> = await axios.get(
-    endpoints.members.list,
+    endpoints.trainers.list,
     { params: params },
   )
 
   return response.data
 };
 
-export const createMember = async (formData: FormData): Promise<any> => {
-  const response: AxiosResponse<CommonResponse<CreateMemberResponse>> =
-    await axios.post(endpoints.members.create, formData)
+export const createTrainer = async (formData: FormData): Promise<any> => {
+  const response: AxiosResponse<CommonResponse<CreateTrainerResponse>> =
+    await axios.post(endpoints.trainers.create, formData)
 
   return response.data
 };
 
-export const getDetailMember = async (id: string): Promise<any> => {
+export const getDetailTrainer = async (id: string): Promise<any> => {
   const response: AxiosResponse<CommonResponse<any>> = await axios.get(
-    endpoints.members.detail(id),
+    endpoints.trainers.detail(id),
   )
 
   return response.data
 };
 
-export const editMember = async (
+export const editTrainer = async (
   id: string,
   formData: FormData,
 ): Promise<any> => {
   const response: AxiosResponse<CommonResponse<any>> = await axios.put(
-    endpoints.members.update(id),
+    endpoints.trainers.update(id),
     formData,
   )
 
   return response.data
 };
 
-export const deleteMember = async (id: string): Promise<any> => {
+export const deleteTrainer = async (id: string): Promise<any> => {
   const response: AxiosResponse<CommonResponse<any>> = await axios.delete(
-    endpoints.members.delete(id),
+    endpoints.trainers.delete(id),
   )
 
   return response.data

@@ -15,6 +15,11 @@ export const useSideMenuStore = defineStore('sideMenu', {
         subMenu: [
           {
             icon: '',
+            pageName: 'create-trainer',
+            title: 'Thêm huấn luyện viên',
+          },
+          {
+            icon: '',
             pageName: 'list-trainers',
             title: 'Danh sách huấn luyện viên',
             path: '/trainers',

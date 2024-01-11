@@ -6,7 +6,7 @@ let litePickerInstance = reactive({})
 
 const getDateFormat = (format) => {
   return format !== undefined ? format : 'D MMM, YYYY'
-};
+}
 
 const setValue = (props, emit) => {
   const format = getDateFormat(props.options.format)
@@ -39,11 +39,11 @@ const init = (el, props, emit) => {
   })
 
   el.Litepicker = litePickerInstance
-};
+}
 
 const reInit = (el, props, emit) => {
   litePickerInstance.destroy()
   init(el, props, emit)
-};
+}
 
 export { setValue, init, reInit }

@@ -20,4 +20,11 @@ export default {
     update: (id: string) => `/packages/${id}`,
     delete: (id: string) => `/packages/${id}`,
   },
+  trainers: {
+    list: '/trainers',
+    create: '/trainers',
+    detail: (id: string) => `/trainers/${id}`,
+    update: (id: string) => `/trainers/${id}`,
+    delete: (id: string) => `/trainers/${id}`,
+  },
 }

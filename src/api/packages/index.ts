@@ -17,7 +17,7 @@ export const createPackage = async (
     request,
   )
   return response.data
-}
+};
 
 export const getPackages = async (
   request: GetPackagesRequest,
@@ -40,7 +40,7 @@ export const getPackages = async (
   )
 
   return response.data
-}
+};
 
 export const deletePackage = async (id: string): Promise<any> => {
   const response: AxiosResponse<CommonResponse<any>> = await axios.delete(
@@ -48,7 +48,7 @@ export const deletePackage = async (id: string): Promise<any> => {
   )
 
   return response.data
-};
+}
 
 export const getDetailPackage = async (id: string): Promise<any> => {
   const response: AxiosResponse<CommonResponse<any>> = await axios.get(
@@ -56,7 +56,7 @@ export const getDetailPackage = async (id: string): Promise<any> => {
   )
 
   return response.data
-};
+}
 
 export const editPackage = async (
   id: string,
@@ -68,4 +68,4 @@ export const editPackage = async (
   )
 
   return response.data
-};
+}

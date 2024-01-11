@@ -31,7 +31,7 @@ const routes = [
           {
             path: '',
             name: 'list-trainers',
-            component: Home,
+            component: () => import('@/views/trainer/List.vue'),
             meta: { requiresAuth: true, title: 'Danh sách huấn luyện viên' },
           },
           {
@@ -40,7 +40,7 @@ const routes = [
               {
                 path: '',
                 name: 'create-trainer',
-                component: Home,
+                component: () => import('@/views/trainer/Create.vue'),
                 meta: { requiresAuth: true, title: 'Thêm huấn luyện viên' },
               },
             ],

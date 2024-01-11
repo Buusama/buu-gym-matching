@@ -21,17 +21,17 @@ const init = (el, props) => {
     dom(clonedEl).on('click', "[data-dismiss='notification']", function () {
       clonedEl.toastify.hideToast()
     });
-  }
+  };
 
   el.hideToast = () => {
     dom(`.${toastifyClass}`).each(function () {
       dom(this)[0].toastify.hideToast()
     });
-  }
+  };
 };
 
 const reInit = (el) => {
   dom(`.${toastifyClass}`).html(dom(el).html())
-};
+}
 
 export { init, reInit }

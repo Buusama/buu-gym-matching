@@ -4,7 +4,7 @@ import ErrorPage from '@/views/error-page/ErrorPage.vue'
 import Member from '@/views/member/List.vue'
 import MemberCreate from '@/views/member/Create.vue'
 import MemberEdit from '@/views/member/Edit.vue'
-import SideMenu from '@/layouts/side-menu/Main.vue'
+import TopMenu from '@/layouts/top-menu/Main.vue'
 const routes = [
   {
     name: 'login',
@@ -14,7 +14,7 @@ const routes = [
   {
     name: 'home',
     path: '/',
-    component: SideMenu,
+    component: TopMenu,
     meta: { requiresAuth: true, title: 'Trang chủ' },
     children: [
       {
